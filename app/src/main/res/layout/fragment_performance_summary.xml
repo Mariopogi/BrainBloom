@@ -4,90 +4,141 @@
     android:id="@+id/performanceRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_floral_field">
+    android:background="@drawable/bg_floral_field"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/screen_padding">
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingStart="14dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="10dp">
 
         <ImageButton
             android:id="@+id/buttonPerformanceBack"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@android:color/transparent"
             android:contentDescription="Back"
-            android:padding="5dp"
+            android:padding="4dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_button_back"
+            app:layout_constraintBottom_toBottomOf="@id/textPerformanceTitle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/textPerformanceTitle" />
 
         <TextView
             android:id="@+id/textPerformanceTitle"
             android:layout_width="0dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="@dimen/medium_gap"
+            android:layout_height="48dp"
+            android:layout_marginStart="12dp"
             android:background="@drawable/bb_top_strip"
             android:fontFamily="@font/arcade"
             android:gravity="center"
             android:includeFontPadding="false"
             android:text="BOOK COMPLETED"
             android:textColor="@color/bb_white"
-            android:textSize="@dimen/header_text_size"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="12sp"
+            android:textSize="22sp"
+            android:textStyle="bold"
             app:autoSizeMaxTextSize="22sp"
+            app:autoSizeMinTextSize="13sp"
+            app:autoSizeTextType="uniform"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/buttonPerformanceBack"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/performanceCard"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/medium_gap"
-            android:layout_marginBottom="@dimen/medium_gap"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/bb_card_light"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="14dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingStart="34dp"
+            android:paddingTop="18dp"
+            android:paddingEnd="34dp"
+            android:paddingBottom="18dp"
             app:layout_constraintBottom_toTopOf="@id/performanceButtonRow"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.60"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textPerformanceTitle">
+            app:layout_constraintTop_toBottomOf="@id/textPerformanceTitle"
+            app:layout_constraintWidth_percent="0.96">
+
+            <TextView
+                android:id="@+id/textPerformanceSummaryTitle"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:fontFamily="@font/arcade"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="PERFORMANCE SUMMARY"
+                android:textColor="@color/bb_black"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:autoSizeMaxTextSize="22sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textPerformanceStats"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="24dp"
                 android:fontFamily="@font/arcade"
                 android:gravity="center_vertical"
                 android:includeFontPadding="false"
-                android:lineSpacingExtra="4dp"
-                android:text="PERFORMANCE SUMMARY\nTime Left: 10s\nFlowers Bloomed: 7\nScore: 700"
+                android:lineSpacingExtra="5dp"
+                android:text="TIME LEFT: 10s&#10;FLOWERS BLOOMED: 7&#10;SCORE: 700"
                 android:textColor="@color/bb_black"
-                android:textSize="@dimen/body_text_size"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="10sp"
                 app:autoSizeTextType="uniform"
-                app:autoSizeMinTextSize="9sp"
-                app:autoSizeMaxTextSize="15sp" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/imagePerformancePanel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textPerformanceSummaryTitle" />
 
-            <ImageView
-                android:id="@+id/imagePerformanceObject"
-                android:layout_width="150dp"
-                android:layout_height="match_parent"
+            <FrameLayout
+                android:id="@+id/imagePerformancePanel"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:background="@drawable/bb_panel_light_rect"
-                android:contentDescription="Completed object"
-                android:padding="12dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_book1_pink_flower" />
-        </LinearLayout>
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textPerformanceSummaryTitle"
+                app:layout_constraintWidth_percent="0.40">
+
+                <ImageView
+                    android:id="@+id/imagePerformanceObject"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Completed object"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_book1_pink_flower" />
+
+            </FrameLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/performanceButtonRow"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="58dp"
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -96,28 +147,38 @@
 
             <Button
                 android:id="@+id/buttonNextBook"
-                android:layout_width="220dp"
-                android:layout_height="@dimen/button_height"
+                android:layout_width="300dp"
+                android:layout_height="54dp"
                 android:background="@drawable/bb_button_green"
                 android:fontFamily="@font/arcade"
+                android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="@string/next_book"
+                android:text="NEXT BOOK"
                 android:textAllCaps="false"
                 android:textColor="@color/bb_white"
-                android:textSize="@dimen/button_text_size" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="24dp"
+                android:layout_height="1dp" />
 
             <Button
                 android:id="@+id/buttonPlayAgain"
-                android:layout_width="220dp"
-                android:layout_height="@dimen/button_height"
-                android:layout_marginStart="@dimen/medium_gap"
+                android:layout_width="300dp"
+                android:layout_height="54dp"
                 android:background="@drawable/bb_button_gray"
                 android:fontFamily="@font/arcade"
+                android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="@string/play_again"
+                android:text="PLAY AGAIN"
                 android:textAllCaps="false"
                 android:textColor="@color/bb_white"
-                android:textSize="@dimen/button_text_size" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>
