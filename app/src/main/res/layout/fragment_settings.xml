@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_hanging_gardens"
+    android:padding="@dimen/screen_padding">
+
+    <ImageButton
+        android:id="@+id/buttonSettingsBack"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Back"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_button_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textSettingsTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/arcade"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/settings"
+        android:textColor="@color/bb_yellow"
+        android:textSize="@dimen/title_text_size"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="20sp"
+        app:autoSizeMaxTextSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/buttonSettingsBack"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/settingsPanel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/medium_gap"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textSettingsTitle">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/small_gap"
+            android:layout_weight="1"
+            android:background="@drawable/bb_panel_dark"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arcade"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="SOUNDS"
+                android:textColor="@color/bb_white"
+                android:textSize="@dimen/body_text_size" />
+
+            <TextView
+                android:id="@+id/textSoundLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_gap"
+                android:gravity="center"
+                android:text="|||||"
+                android:textColor="@color/bb_green"
+                android:textSize="22sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/buttonSoundMinus"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@android:color/transparent"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_decrease_sound" />
+
+                <ImageButton
+                    android:id="@+id/buttonSoundPlus"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@android:color/transparent"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_increase_sound" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/small_gap"
+            android:layout_marginEnd="@dimen/small_gap"
+            android:layout_weight="1"
+            android:background="@drawable/bb_panel_dark"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arcade"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="MUSIC"
+                android:textColor="@color/bb_white"
+                android:textSize="@dimen/body_text_size" />
+
+            <TextView
+                android:id="@+id/textMusicLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_gap"
+                android:gravity="center"
+                android:text="|||||"
+                android:textColor="@color/bb_green"
+                android:textSize="22sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/buttonMusicMinus"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@android:color/transparent"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_decrease_sound" />
+
+                <ImageButton
+                    android:id="@+id/buttonMusicPlus"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@android:color/transparent"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_increase_sound" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonExportLeaderboard"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/small_gap"
+            android:layout_weight="1"
+            android:background="@drawable/bb_button_green"
+            android:fontFamily="@font/arcade"
+            android:includeFontPadding="false"
+            android:text="EXPORT\nLEADERBOARD"
+            android:textAllCaps="false"
+            android:textColor="@color/bb_white"
+            android:textSize="@dimen/button_text_size" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

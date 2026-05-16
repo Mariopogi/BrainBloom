@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popupNavigationMenuRoot"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <ImageView
+        android:id="@+id/imgPopupNavigationMenu"
+        android:layout_width="380dp"
+        android:layout_height="160dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_button_back_category_exit" />
+
+    <Button
+        android:id="@+id/btnPopupTopAction"
+        android:layout_width="380dp"
+        android:layout_height="80dp"
+        android:layout_gravity="top"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/arcade"
+        android:padding="0dp"
+        android:text=""
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btnPopupExit"
+        android:layout_width="380dp"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/arcade"
+        android:padding="0dp"
+        android:text=""
+        android:textAllCaps="false" />
+
+</FrameLayout>

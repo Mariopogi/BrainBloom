@@ -1,0 +1,21 @@
+<resources>
+    <string-array name="difficulty_names">
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+    </string-array>
+
+    <string-array name="book_names">
+        <item>Flower Field</item>
+        <item>Tree Area</item>
+        <item>River</item>
+        <item>Sky</item>
+    </string-array>
+
+    <string-array name="book_categories">
+        <item>Plants</item>
+        <item>General Knowledge</item>
+        <item>Mixed Knowledge</item>
+        <item>Logic</item>
+    </string-array>
+</resources>

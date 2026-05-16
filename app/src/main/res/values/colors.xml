@@ -1,0 +1,20 @@
+<resources>
+    <color name="bb_green">#2E8B3C</color>
+    <color name="bb_dark_green">#083B1F</color>
+    <color name="bb_blue">#071B8F</color>
+    <color name="bb_yellow">#F4D84E</color>
+    <color name="bb_purple">#4B2F70</color>
+    <color name="bb_red">#C91E2E</color>
+    <color name="bb_orange">#FF8A3D</color>
+    <color name="bb_gray">#5E5E5E</color>
+    <color name="bb_dark_brown">#3F2B2B</color>
+    <color name="bb_card">#F7F4D9</color>
+    <color name="bb_black">#111111</color>
+    <color name="bb_white">#FFFFFF</color>
+    <color name="bb_answer_a">#C4375B</color>
+    <color name="bb_answer_b">#4F6FFF</color>
+    <color name="bb_answer_c">#A7D900</color>
+    <color name="bb_answer_d">#C65CDB</color>
+    <color name="bb_dialog_dark">#4A4A4A</color>
+    <color name="bb_overlay">#99000000</color>
+</resources>

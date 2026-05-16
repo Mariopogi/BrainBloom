@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/performanceRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_floral_field">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/screen_padding">
+
+        <ImageButton
+            android:id="@+id/buttonPerformanceBack"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Back"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_button_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textPerformanceTitle"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="@dimen/medium_gap"
+            android:background="@drawable/bb_top_strip"
+            android:fontFamily="@font/arcade"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="BOOK COMPLETED"
+            android:textColor="@color/bb_white"
+            android:textSize="@dimen/header_text_size"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeMaxTextSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/buttonPerformanceBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/performanceCard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/medium_gap"
+            android:layout_marginBottom="@dimen/medium_gap"
+            android:background="@drawable/bb_card_light"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="14dp"
+            app:layout_constraintBottom_toTopOf="@id/performanceButtonRow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textPerformanceTitle">
+
+            <TextView
+                android:id="@+id/textPerformanceStats"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/arcade"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="4dp"
+                android:text="PERFORMANCE SUMMARY\nTime Left: 10s\nFlowers Bloomed: 7\nScore: 700"
+                android:textColor="@color/bb_black"
+                android:textSize="@dimen/body_text_size"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="9sp"
+                app:autoSizeMaxTextSize="15sp" />
+
+            <ImageView
+                android:id="@+id/imagePerformanceObject"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bb_panel_light_rect"
+                android:contentDescription="Completed object"
+                android:padding="12dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_book1_pink_flower" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/performanceButtonRow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/buttonNextBook"
+                android:layout_width="220dp"
+                android:layout_height="@dimen/button_height"
+                android:background="@drawable/bb_button_green"
+                android:fontFamily="@font/arcade"
+                android:includeFontPadding="false"
+                android:text="@string/next_book"
+                android:textAllCaps="false"
+                android:textColor="@color/bb_white"
+                android:textSize="@dimen/button_text_size" />
+
+            <Button
+                android:id="@+id/buttonPlayAgain"
+                android:layout_width="220dp"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginStart="@dimen/medium_gap"
+                android:background="@drawable/bb_button_gray"
+                android:fontFamily="@font/arcade"
+                android:includeFontPadding="false"
+                android:text="@string/play_again"
+                android:textAllCaps="false"
+                android:textColor="@color/bb_white"
+                android:textSize="@dimen/button_text_size" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

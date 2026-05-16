@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/twoPlayerQuizRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_floral_field">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/screen_padding">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/quizRightGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.74" />
+
+        <LinearLayout
+            android:id="@+id/quizTopPanel"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/top_bar_height"
+            android:background="@drawable/bb_panel_dark"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@id/quizRightGuide"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textQuizBook"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/arcade"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:text="BOOK 1:\nTHE FLOWER FIELD"
+                android:textColor="@color/bb_white"
+                android:textSize="15sp"
+                android:maxLines="2"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="9sp"
+                app:autoSizeMaxTextSize="16sp" />
+
+            <ImageView
+                android:id="@+id/imageHearts"
+                android:layout_width="96dp"
+                android:layout_height="34dp"
+                android:contentDescription="Hearts"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_3_hp" />
+
+            <TextView
+                android:id="@+id/textTimer"
+                android:layout_width="58dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="@dimen/small_gap"
+                android:background="@drawable/bb_button_blue"
+                android:fontFamily="@font/arcade"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="30s"
+                android:textColor="@color/bb_white"
+                android:textSize="16sp"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="10sp"
+                app:autoSizeMaxTextSize="18sp" />
+
+            <TextView
+                android:id="@+id/textCombo"
+                android:layout_width="54dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="@dimen/small_gap"
+                android:background="@drawable/bb_button_blue"
+                android:fontFamily="@font/arcade"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="COMBO\n0x"
+                android:textColor="@color/bb_white"
+                android:textSize="9sp"
+                android:maxLines="2" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/buttonPauseQuiz"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/top_bar_height"
+            android:layout_marginStart="@dimen/medium_gap"
+            android:background="@drawable/bb_panel_dark"
+            android:contentDescription="Pause"
+            android:padding="16dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_button_pause"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/quizRightGuide"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textQuestionNumber"
+            android:layout_width="0dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="@dimen/small_gap"
+            android:background="@drawable/bb_card_light"
+            android:fontFamily="@font/arcade"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:text="QUESTION 1 OUT 10"
+            android:textColor="@color/bb_red"
+            android:textSize="13sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="9sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:layout_constraintEnd_toStartOf="@id/quizRightGuide"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quizTopPanel" />
+
+        <TextView
+            android:id="@+id/textQuestion"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/small_gap"
+            android:layout_marginBottom="@dimen/small_gap"
+            android:background="@drawable/bb_card_light"
+            android:fontFamily="@font/arcade"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="1dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:text="Which part of a plant usually makes seeds?"
+            android:textColor="@color/bb_black"
+            android:textSize="14sp"
+            android:maxLines="4"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeMaxTextSize="15sp"
+            app:layout_constraintBottom_toTopOf="@id/answerGrid"
+            app:layout_constraintEnd_toStartOf="@id/quizRightGuide"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textQuestionNumber" />
+
+        <GridLayout
+            android:id="@+id/answerGrid"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:columnCount="2"
+            android:rowCount="2"
+            android:useDefaultMargins="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/quizRightGuide"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textQuestion">
+
+            <Button
+                android:id="@+id/buttonChoiceA"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_margin="4dp"
+                android:background="@drawable/bb_answer_a"
+                android:fontFamily="@font/arcade"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:paddingStart="18dp"
+                android:paddingEnd="10dp"
+                android:text="A  Flower"
+                android:textAllCaps="false"
+                android:textColor="@color/bb_white"
+                android:textSize="13sp"
+                android:maxLines="2"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="14sp" />
+
+            <Button
+                android:id="@+id/buttonChoiceC"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_margin="4dp"
+                android:background="@drawable/bb_answer_c"
+                android:fontFamily="@font/arcade"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:paddingStart="18dp"
+                android:paddingEnd="10dp"
+                android:text="C  Bark"
+                android:textAllCaps="false"
+                android:textColor="@color/bb_white"
+                android:textSize="13sp"
+                android:maxLines="2"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="14sp" />
+
+            <Button
+                android:id="@+id/buttonChoiceB"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_margin="4dp"
+                android:background="@drawable/bb_answer_b"
+                android:fontFamily="@font/arcade"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:paddingStart="18dp"
+                android:paddingEnd="10dp"
+                android:text="B  Stem"
+                android:textAllCaps="false"
+                android:textColor="@color/bb_white"
+                android:textSize="13sp"
+                android:maxLines="2"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="14sp" />
+
+            <Button
+                android:id="@+id/buttonChoiceD"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_margin="4dp"
+                android:background="@drawable/bb_answer_d"
+                android:fontFamily="@font/arcade"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:paddingStart="18dp"
+                android:paddingEnd="10dp"
+                android:text="D  Leaf"
+                android:textAllCaps="false"
+                android:textColor="@color/bb_white"
+                android:textSize="13sp"
+                android:maxLines="2"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="14sp" />
+        </GridLayout>
+
+        <TextView
+            android:id="@+id/textProgress"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/medium_gap"
+            android:layout_marginTop="@dimen/small_gap"
+            android:background="@drawable/bb_panel_dark"
+            android:fontFamily="@font/arcade"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="12dp"
+            android:text="PROGRESS 0/10\nAnswer 7 correctly to restore the book"
+            android:textColor="@color/bb_white"
+            android:textSize="14sp"
+            android:maxLines="5"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeMaxTextSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/quizRightGuide"
+            app:layout_constraintTop_toBottomOf="@id/buttonPauseQuiz" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

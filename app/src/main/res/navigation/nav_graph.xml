@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainMenuFragment">
+
+    <fragment
+        android:id="@+id/mainMenuFragment"
+        android:name="com.example.brainbloom.fragments.MainMenuFragment"
+        android:label="Main Menu">
+        <action android:id="@+id/action_mainMenu_to_story" app:destination="@id/storyFragment" />
+        <action android:id="@+id/action_mainMenu_to_twoPlayerSetup" app:destination="@id/twoPlayerSetupFragment" />
+        <action android:id="@+id/action_mainMenu_to_leaderboard" app:destination="@id/leaderboardFragment" />
+        <action android:id="@+id/action_mainMenu_to_settings" app:destination="@id/settingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/storyFragment"
+        android:name="com.example.brainbloom.fragments.StoryFragment"
+        android:label="Story">
+        <action android:id="@+id/action_story_to_bookSelection" app:destination="@id/bookSelectionFragment" />
+        <action android:id="@+id/action_story_to_mainMenu" app:destination="@id/mainMenuFragment" app:popUpTo="@id/mainMenuFragment" app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookSelectionFragment"
+        android:name="com.example.brainbloom.fragments.BookSelectionFragment"
+        android:label="Book Selection">
+        <action android:id="@+id/action_bookSelection_to_bookDetails" app:destination="@id/bookDetailsFragment" />
+        <action android:id="@+id/action_bookSelection_to_mainMenu" app:destination="@id/mainMenuFragment" app:popUpTo="@id/mainMenuFragment" app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookDetailsFragment"
+        android:name="com.example.brainbloom.fragments.BookDetailsFragment"
+        android:label="Book Details">
+        <action android:id="@+id/action_bookDetails_to_quiz" app:destination="@id/quizFragment" />
+        <action android:id="@+id/action_bookDetails_to_bookSelection" app:destination="@id/bookSelectionFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.example.brainbloom.fragments.QuizFragment"
+        android:label="Quiz">
+        <action android:id="@+id/action_quiz_to_performanceSummary" app:destination="@id/performanceSummaryFragment" />
+        <action android:id="@+id/action_quiz_to_gameOver" app:destination="@id/gameOverFragment" />
+        <action android:id="@+id/action_quiz_to_mainMenu" app:destination="@id/mainMenuFragment" app:popUpTo="@id/mainMenuFragment" app:popUpToInclusive="false" />
+        <action android:id="@+id/action_quiz_to_quiz" app:destination="@id/quizFragment" app:popUpTo="@id/quizFragment" app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/performanceSummaryFragment"
+        android:name="com.example.brainbloom.fragments.PerformanceSummaryFragment"
+        android:label="Performance Summary">
+        <action android:id="@+id/action_performance_to_bookSelection" app:destination="@id/bookSelectionFragment" />
+        <action android:id="@+id/action_performance_to_allBooksRestored" app:destination="@id/allBooksRestoredFragment" />
+        <action android:id="@+id/action_performance_to_quiz" app:destination="@id/quizFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/allBooksRestoredFragment"
+        android:name="com.example.brainbloom.fragments.AllBooksRestoredFragment"
+        android:label="All Books Restored">
+        <action android:id="@+id/action_allBooks_to_finalSummary" app:destination="@id/finalSummaryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/finalSummaryFragment"
+        android:name="com.example.brainbloom.fragments.FinalSummaryFragment"
+        android:label="Final Summary">
+        <action android:id="@+id/action_finalSummary_to_mainMenu" app:destination="@id/mainMenuFragment" app:popUpTo="@id/mainMenuFragment" app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/gameOverFragment"
+        android:name="com.example.brainbloom.fragments.GameOverFragment"
+        android:label="Game Over">
+        <action android:id="@+id/action_gameOver_to_quiz" app:destination="@id/quizFragment" />
+        <action android:id="@+id/action_gameOver_to_mainMenu" app:destination="@id/mainMenuFragment" app:popUpTo="@id/mainMenuFragment" app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/leaderboardFragment"
+        android:name="com.example.brainbloom.fragments.LeaderboardFragment"
+        android:label="Leaderboard">
+        <action android:id="@+id/action_leaderboard_to_mainMenu" app:destination="@id/mainMenuFragment" app:popUpTo="@id/mainMenuFragment" app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.brainbloom.fragments.SettingsFragment"
+        android:label="Settings">
+        <action android:id="@+id/action_settings_to_mainMenu" app:destination="@id/mainMenuFragment" app:popUpTo="@id/mainMenuFragment" app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/twoPlayerSetupFragment"
+        android:name="com.example.brainbloom.fragments.TwoPlayerSetupFragment"
+        android:label="Two Player Setup">
+        <action android:id="@+id/action_twoPlayerSetup_to_twoPlayerQuiz" app:destination="@id/twoPlayerQuizFragment" />
+        <action android:id="@+id/action_twoPlayerSetup_to_mainMenu" app:destination="@id/mainMenuFragment" app:popUpTo="@id/mainMenuFragment" app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/twoPlayerQuizFragment"
+        android:name="com.example.brainbloom.fragments.TwoPlayerQuizFragment"
+        android:label="Two Player Quiz">
+        <action android:id="@+id/action_twoPlayerQuiz_to_winnerResult" app:destination="@id/winnerResultFragment" />
+        <action android:id="@+id/action_twoPlayerQuiz_to_mainMenu" app:destination="@id/mainMenuFragment" app:popUpTo="@id/mainMenuFragment" app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/winnerResultFragment"
+        android:name="com.example.brainbloom.fragments.WinnerResultFragment"
+        android:label="Winner Result">
+        <action android:id="@+id/action_winnerResult_to_twoPlayerSetup" app:destination="@id/twoPlayerSetupFragment" />
+        <action android:id="@+id/action_winnerResult_to_mainMenu" app:destination="@id/mainMenuFragment" app:popUpTo="@id/mainMenuFragment" app:popUpToInclusive="false" />
+    </fragment>
+
+</navigation>

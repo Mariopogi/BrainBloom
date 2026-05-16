@@ -1,0 +1,12 @@
+<resources>
+    <style name="Theme.BrainBloom" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:fontFamily">@font/arcade</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:colorAccent">@color/bb_green</item>
+        <item name="android:navigationBarColor">@color/bb_black</item>
+        <item name="android:statusBarColor">@color/bb_black</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+</resources>

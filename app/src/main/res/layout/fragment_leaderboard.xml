@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_hanging_gardens"
+    android:padding="@dimen/screen_padding">
+
+    <ImageButton
+        android:id="@+id/buttonLeaderboardBack"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Back"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_button_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textLeaderboardTitle"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="@dimen/medium_gap"
+        android:background="@drawable/bb_top_strip"
+        android:fontFamily="@font/arcade"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="LEADERBOARDS"
+        android:textColor="@color/bb_yellow"
+        android:textSize="@dimen/header_text_size"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="14sp"
+        app:autoSizeMaxTextSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/buttonLeaderboardBack"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/leaderboardContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/medium_gap"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textLeaderboardTitle">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/small_gap"
+            android:layout_weight="1"
+            android:background="@drawable/bb_card_light"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:background="@drawable/bb_button_yellow"
+                android:fontFamily="@font/arcade"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="SINGLE"
+                android:textColor="@color/bb_white"
+                android:textSize="@dimen/body_text_size" />
+
+            <LinearLayout
+                android:id="@+id/layoutSingleLeaderboard"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp" />
+
+            <Button
+                android:id="@+id/buttonResetSingle"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="@drawable/bb_button_red"
+                android:fontFamily="@font/arcade"
+                android:includeFontPadding="false"
+                android:text="RESET"
+                android:textAllCaps="false"
+                android:textColor="@color/bb_white"
+                android:textSize="@dimen/small_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/small_gap"
+            android:layout_weight="1"
+            android:background="@drawable/bb_card_light"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:background="@drawable/bb_button_yellow"
+                android:fontFamily="@font/arcade"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="2 PLAYER"
+                android:textColor="@color/bb_white"
+                android:textSize="@dimen/body_text_size" />
+
+            <LinearLayout
+                android:id="@+id/layoutTwoPlayerLeaderboard"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp" />
+
+            <Button
+                android:id="@+id/buttonResetTwoPlayer"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="@drawable/bb_button_red"
+                android:fontFamily="@font/arcade"
+                android:includeFontPadding="false"
+                android:text="RESET"
+                android:textAllCaps="false"
+                android:textColor="@color/bb_white"
+                android:textSize="@dimen/small_text_size" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

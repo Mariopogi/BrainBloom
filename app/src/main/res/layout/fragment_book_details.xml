@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bookDetailsRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_floral_field">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bookDetailsContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingStart="26dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="26dp"
+        android:paddingBottom="18dp">
+
+        <ImageButton
+            android:id="@+id/buttonBookDetailsBack"
+            android:layout_width="58dp"
+            android:layout_height="50dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Back"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_button_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textBookTitle"
+            android:layout_width="0dp"
+            android:layout_height="58dp"
+            android:layout_marginStart="58dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bb_top_strip"
+            android:fontFamily="@font/arcade"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:text="BOOK 1: FLOWER FIELD"
+            android:textColor="@color/bb_white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:autoSizeMaxTextSize="24sp"
+            app:autoSizeMinTextSize="15sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/bookDetailsCard"
+            android:layout_width="0dp"
+            android:layout_height="205dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bb_card_light"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="24dp"
+            android:paddingTop="18dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textBookTitle">
+
+            <LinearLayout
+                android:id="@+id/bookDetailsTextGroup"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textBookCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:gravity="start|center_vertical"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="CATEGORY: Plants"
+                    android:textColor="#C60000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:autoSizeMaxTextSize="20sp"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeTextType="uniform" />
+
+                <TextView
+                    android:id="@+id/textBookGoal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:fontFamily="sans-serif-black"
+                    android:gravity="start|center_vertical"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:text="GOAL: Restore the garden by answering all questions correctly."
+                    android:textColor="#2E7D40"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:autoSizeMaxTextSize="20sp"
+                    app:autoSizeMinTextSize="11sp"
+                    app:autoSizeTextType="uniform" />
+
+                <TextView
+                    android:id="@+id/textBookQuestions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:fontFamily="sans-serif-black"
+                    android:gravity="start|center_vertical"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="QUESTIONS: 10"
+                    android:textColor="#0D1B26"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:autoSizeMaxTextSize="20sp"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeTextType="uniform" />
+
+                <TextView
+                    android:id="@+id/textBookReward"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:fontFamily="sans-serif-black"
+                    android:gravity="start|center_vertical"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="REWARD: Unlock the Tree Area"
+                    android:textColor="#1F5A4A"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:autoSizeMaxTextSize="20sp"
+                    app:autoSizeMinTextSize="11sp"
+                    app:autoSizeTextType="uniform" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/bookObjectFrame"
+                android:layout_width="128dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="24dp"
+                android:background="@drawable/bb_panel_light_rect"
+                android:padding="12dp">
+
+                <ImageView
+                    android:id="@+id/imageBookObject"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Book object"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_intro_red_flowers_book1" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonStartBookQuiz"
+            android:layout_width="360dp"
+            android:layout_height="58dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bb_button_green"
+            android:fontFamily="@font/arcade"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="0dp"
+            android:stateListAnimator="@null"
+            android:text="@string/start_adventure"
+            android:textAllCaps="false"
+            android:textColor="@color/bb_white"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            app:autoSizeMaxTextSize="21sp"
+            app:autoSizeMinTextSize="13sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bookDetailsCard" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

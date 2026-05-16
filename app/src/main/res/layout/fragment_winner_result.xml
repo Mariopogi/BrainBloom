@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_pastel_sky"
+    android:padding="@dimen/screen_padding">
+
+    <TextView
+        android:id="@+id/textWinnerTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/arcade"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="PLAYER WON"
+        android:textColor="@color/bb_yellow"
+        android:textSize="@dimen/title_text_size"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="20sp"
+        app:autoSizeMaxTextSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/winnerPanel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/medium_gap"
+        android:layout_marginBottom="@dimen/medium_gap"
+        android:background="@drawable/bb_panel_dark"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@id/winnerButtonRow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textWinnerTitle">
+
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            android:contentDescription="Winner crown"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_crown_player_win" />
+
+        <TextView
+            android:id="@+id/textWinnerStats"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/large_gap"
+            android:layout_weight="1"
+            android:fontFamily="@font/arcade"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="Player 1 Score: 0\nPlayer 2 Score: 0"
+            android:textColor="@color/bb_white"
+            android:textSize="@dimen/body_text_size"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="10sp"
+            app:autoSizeMaxTextSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/winnerButtonRow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/buttonWinnerPlayAgain"
+            android:layout_width="220dp"
+            android:layout_height="@dimen/button_height"
+            android:background="@drawable/bb_button_green"
+            android:fontFamily="@font/arcade"
+            android:includeFontPadding="false"
+            android:text="@string/play_again"
+            android:textAllCaps="false"
+            android:textColor="@color/bb_white"
+            android:textSize="@dimen/button_text_size" />
+
+        <Button
+            android:id="@+id/buttonWinnerMainMenu"
+            android:layout_width="220dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginStart="@dimen/medium_gap"
+            android:background="@drawable/bb_button_gray"
+            android:fontFamily="@font/arcade"
+            android:includeFontPadding="false"
+            android:text="@string/main_menu"
+            android:textAllCaps="false"
+            android:textColor="@color/bb_white"
+            android:textSize="@dimen/button_text_size" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gameOverRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_shadow_grove"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideTitleTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideTitleBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.20" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidePanelTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidePanelBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideTryTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.64" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideTryBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.77" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideMenuTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.82" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideMenuBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLeftPanelStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLeftPanelEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.47" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideRightPanelStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.53" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideRightPanelEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideButtonStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.29" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideButtonEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.71" />
+
+    <TextView
+        android:id="@+id/textGameOverTitle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/arcade"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:shadowColor="#000000"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="1"
+        android:text="GAME OVER"
+        android:textColor="@color/bb_white"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:autoSizeMaxTextSize="48sp"
+        app:autoSizeMinTextSize="26sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@id/guideTitleBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideTitleTop" />
+
+    <TextView
+        android:id="@+id/textGameOverMessage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bb_panel_dark"
+        android:fontFamily="sans"
+        android:gravity="center"
+        android:includeFontPadding="true"
+        android:lineSpacingExtra="6dp"
+        android:paddingStart="20dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="14dp"
+        android:text="Do not give up!&#10;&#10;Try again and restore the&#10;garden"
+        android:textColor="@color/bb_white"
+        android:textSize="23sp"
+        android:textStyle="normal"
+        app:autoSizeMaxTextSize="23sp"
+        app:autoSizeMinTextSize="14sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@id/guidePanelBottom"
+        app:layout_constraintEnd_toStartOf="@id/guideLeftPanelEnd"
+        app:layout_constraintStart_toStartOf="@id/guideLeftPanelStart"
+        app:layout_constraintTop_toTopOf="@id/guidePanelTop"
+        tools:text="Do not give up!&#10;&#10;Try again and restore the&#10;garden" />
+
+    <LinearLayout
+        android:id="@+id/gameOverScorePanel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bb_panel_dark"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingStart="18dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="14dp"
+        app:layout_constraintBottom_toTopOf="@id/guidePanelBottom"
+        app:layout_constraintEnd_toStartOf="@id/guideRightPanelEnd"
+        app:layout_constraintStart_toStartOf="@id/guideRightPanelStart"
+        app:layout_constraintTop_toTopOf="@id/guidePanelTop">
+
+        <TextView
+            android:id="@+id/textGameOverScoreLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="FINAL SCORE"
+            android:textColor="@color/bb_white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textGameOverScore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="0"
+            android:textColor="@color/bb_yellow"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            app:autoSizeMaxTextSize="48sp"
+            app:autoSizeMinTextSize="28sp"
+            app:autoSizeTextType="uniform" />
+
+        <TextView
+            android:id="@+id/textGameOverCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="Keep learning to restore the magical garden!"
+            android:textColor="@color/bb_white"
+            android:textSize="12sp"
+            app:autoSizeMaxTextSize="12sp"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeTextType="uniform" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonTryAgain"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bb_button_orange"
+        android:backgroundTint="@null"
+        android:fontFamily="sans"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="0dp"
+        android:stateListAnimator="@null"
+        android:text="TRY AGAIN"
+        android:textAllCaps="false"
+        android:textColor="@color/bb_white"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        app:autoSizeMaxTextSize="27sp"
+        app:autoSizeMinTextSize="16sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@id/guideTryBottom"
+        app:layout_constraintEnd_toStartOf="@id/guideButtonEnd"
+        app:layout_constraintStart_toStartOf="@id/guideButtonStart"
+        app:layout_constraintTop_toTopOf="@id/guideTryTop"
+        tools:text="TRY AGAIN" />
+
+    <Button
+        android:id="@+id/buttonGameOverMainMenu"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bb_button_gray"
+        android:backgroundTint="@null"
+        android:fontFamily="sans"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="0dp"
+        android:stateListAnimator="@null"
+        android:text="MAIN MENU"
+        android:textAllCaps="false"
+        android:textColor="@color/bb_white"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        app:autoSizeMaxTextSize="27sp"
+        app:autoSizeMinTextSize="16sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@id/guideMenuBottom"
+        app:layout_constraintEnd_toStartOf="@id/guideButtonEnd"
+        app:layout_constraintStart_toStartOf="@id/guideButtonStart"
+        app:layout_constraintTop_toTopOf="@id/guideMenuTop"
+        tools:text="MAIN MENU" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

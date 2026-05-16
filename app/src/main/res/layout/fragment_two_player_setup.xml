@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_flower_valley"
+    android:padding="@dimen/screen_padding">
+
+    <ImageButton
+        android:id="@+id/buttonTwoPlayerBack"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Back"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_button_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textTwoPlayerTitle"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="@dimen/medium_gap"
+        android:background="@drawable/bb_top_strip"
+        android:fontFamily="@font/arcade"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="2 PLAYER MODE"
+        android:textColor="@color/bb_yellow"
+        android:textSize="@dimen/header_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/buttonTwoPlayerBack"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/twoPlayerSetupPanel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/medium_gap"
+        android:background="@drawable/bb_panel_dark"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="14dp"
+        android:weightSum="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textTwoPlayerTitle">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/editPlayerOneName"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:background="@drawable/bb_card_light"
+                android:fontFamily="@font/arcade"
+                android:gravity="center"
+                android:hint="PLAYER 1"
+                android:includeFontPadding="false"
+                android:singleLine="true"
+                android:textColor="@color/bb_black"
+                android:textColorHint="@color/bb_gray"
+                android:textSize="@dimen/body_text_size" />
+
+            <EditText
+                android:id="@+id/editPlayerTwoName"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="@dimen/medium_gap"
+                android:background="@drawable/bb_card_light"
+                android:fontFamily="@font/arcade"
+                android:gravity="center"
+                android:hint="PLAYER 2"
+                android:includeFontPadding="false"
+                android:singleLine="true"
+                android:textColor="@color/bb_black"
+                android:textColorHint="@color/bb_gray"
+                android:textSize="@dimen/body_text_size" />
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/radioDifficulty"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/large_gap"
+            android:layout_marginEnd="@dimen/large_gap"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radioEasy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/bb_yellow"
+                android:fontFamily="@font/arcade"
+                android:text="EASY"
+                android:textColor="@color/bb_white"
+                android:textSize="@dimen/body_text_size" />
+
+            <RadioButton
+                android:id="@+id/radioMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/bb_yellow"
+                android:fontFamily="@font/arcade"
+                android:text="MEDIUM"
+                android:textColor="@color/bb_white"
+                android:textSize="@dimen/body_text_size" />
+
+            <RadioButton
+                android:id="@+id/radioHard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/bb_yellow"
+                android:fontFamily="@font/arcade"
+                android:text="HARD"
+                android:textColor="@color/bb_white"
+                android:textSize="@dimen/body_text_size" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/buttonStartTwoPlayerMatch"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_weight="1"
+            android:background="@drawable/bb_button_green"
+            android:fontFamily="@font/arcade"
+            android:includeFontPadding="false"
+            android:text="START MATCH"
+            android:textAllCaps="false"
+            android:textColor="@color/bb_white"
+            android:textSize="@dimen/button_text_size" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
