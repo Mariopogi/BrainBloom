@@ -30,8 +30,8 @@ public class TwoPlayerSetupFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         MusicManager.getInstance(requireContext()).playMusic(R.raw.bg_music_before_quiz, true);
 
-        EditText playerOne = view.findViewById(R.id.editPlayerOneName);
-        EditText playerTwo = view.findViewById(R.id.editPlayerTwoName);
+        EditText editPlayerOne = view.findViewById(R.id.editPlayerOneName);
+        EditText editPlayerTwo = view.findViewById(R.id.editPlayerTwoName);
 
         view.findViewById(R.id.buttonTwoPlayerBack).setOnClickListener(v -> {
             SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
@@ -41,6 +41,16 @@ public class TwoPlayerSetupFragment extends Fragment {
         view.findViewById(R.id.buttonStartTwoPlayerMatch).setOnClickListener(v -> {
             SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
 
+            String player1Name = editPlayerOne.getText().toString().trim();
+            String player2Name = editPlayerTwo.getText().toString().trim();
+
+            if (player1Name.isEmpty()) {
+                player1Name = "Player 1";
+            }
+            if (player2Name.isEmpty()) {
+                player2Name = "Player 2";
+            }
+
             String difficulty = "Easy";
             if (((RadioButton) view.findViewById(R.id.radioMedium)).isChecked()) {
                 difficulty = "Medium";
@@ -48,14 +58,15 @@ public class TwoPlayerSetupFragment extends Fragment {
                 difficulty = "Hard";
             }
 
-            GameSession.getInstance().resetTwoPlayer(
-                    playerOne.getText().toString(),
-                    playerTwo.getText().toString(),
-                    difficulty
-            );
+            GameSession.getInstance().resetTwoPlayer(player1Name, player2Name, difficulty);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("PLAYER_1_NAME", player1Name);
+            bundle.putString("PLAYER_2_NAME", player2Name);
+            bundle.putString("DIFFICULTY", difficulty);
 
             MusicManager.getInstance(requireContext()).playMusic(R.raw.bg_music_quiz_screen_1, true);
-            NavHostFragment.findNavController(this).navigate(R.id.action_twoPlayerSetup_to_twoPlayerQuiz);
+            NavHostFragment.findNavController(this).navigate(R.id.action_twoPlayerSetup_to_twoPlayerQuiz, bundle);
         });
     }
 }

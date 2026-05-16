@@ -1,100 +1,298 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_pastel_sky"
-    android:padding="@dimen/screen_padding">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textWinnerTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/arcade"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:text="PLAYER WON"
-        android:textColor="@color/bb_yellow"
-        android:textSize="@dimen/title_text_size"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="20sp"
-        app:autoSizeMaxTextSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_pastel_sky" />
 
-    <LinearLayout
-        android:id="@+id/winnerPanel"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/medium_gap"
-        android:layout_marginBottom="@dimen/medium_gap"
-        android:background="@drawable/bb_panel_dark"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@id/winnerButtonRow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textWinnerTitle">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/screen_padding">
 
+        <!-- STAR BADGE -->
         <ImageView
-            android:layout_width="140dp"
-            android:layout_height="match_parent"
-            android:contentDescription="Winner crown"
+            android:id="@+id/imageWinnerStar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="Winner star"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_crown_player_win" />
+            android:src="@drawable/ic_completed_badge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- WINNER TITLE -->
         <TextView
-            android:id="@+id/textWinnerStats"
+            android:id="@+id/textWinnerTitle"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/large_gap"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/arcade"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="Player 1 Score: 0\nPlayer 2 Score: 0"
-            android:textColor="@color/bb_white"
-            android:textSize="@dimen/body_text_size"
+            android:shadowColor="#000000"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="1"
+            android:text="PLAYER 1 WINS!"
+            android:textColor="@color/bb_yellow"
+            android:textSize="@dimen/title_text_size"
+            app:autoSizeMaxTextSize="36sp"
+            app:autoSizeMinTextSize="20sp"
             app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="10sp"
-            app:autoSizeMaxTextSize="16sp" />
-    </LinearLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageWinnerStar" />
 
-    <LinearLayout
-        android:id="@+id/winnerButtonRow"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        <!-- PLAYER 1 RESULT CARD (yellow/gold) -->
+        <LinearLayout
+            android:id="@+id/player1Card"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bb_button_yellow"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layout_constraintBottom_toTopOf="@id/player2Card"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textWinnerTitle"
+            app:layout_constraintVertical_chainStyle="packed">
 
-        <Button
-            android:id="@+id/buttonWinnerPlayAgain"
-            android:layout_width="220dp"
-            android:layout_height="@dimen/button_height"
-            android:background="@drawable/bb_button_green"
-            android:fontFamily="@font/arcade"
-            android:includeFontPadding="false"
-            android:text="@string/play_again"
-            android:textAllCaps="false"
-            android:textColor="@color/bb_white"
-            android:textSize="@dimen/button_text_size" />
+            <!-- Crown icon -->
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:contentDescription="Crown"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_crown_player_win" />
 
-        <Button
-            android:id="@+id/buttonWinnerMainMenu"
-            android:layout_width="220dp"
-            android:layout_height="@dimen/button_height"
-            android:layout_marginStart="@dimen/medium_gap"
-            android:background="@drawable/bb_button_gray"
-            android:fontFamily="@font/arcade"
-            android:includeFontPadding="false"
-            android:text="@string/main_menu"
-            android:textAllCaps="false"
-            android:textColor="@color/bb_white"
-            android:textSize="@dimen/button_text_size" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- Stats -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arcade"
+                    android:includeFontPadding="false"
+                    android:text="PLAYER 1"
+                    android:textColor="@color/bb_black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textWinnerP1Stats"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/arcade"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="3dp"
+                    android:text="SCORE     0&#10;TIME      0s&#10;COMBO     0x"
+                    android:textColor="@color/bb_black"
+                    android:textSize="13sp"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="9sp"
+                    app:autoSizeTextType="uniform" />
+
+            </LinearLayout>
+
+            <!-- Avatar + name -->
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bb_card_light"
+                    android:contentDescription="Player 1 avatar"
+                    android:padding="6dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_crown_player_win" />
+
+                <TextView
+                    android:id="@+id/textWinnerP1Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bb_panel_dark"
+                    android:fontFamily="@font/arcade"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:padding="3dp"
+                    android:text="Mario"
+                    android:textColor="@color/bb_white"
+                    android:textSize="11sp"
+                    app:autoSizeMaxTextSize="12sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeTextType="uniform" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- PLAYER 2 RESULT CARD (beige/cream) -->
+        <LinearLayout
+            android:id="@+id/player2Card"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bb_card_light"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layout_constraintBottom_toTopOf="@id/winnerButtonRow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/player1Card">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:contentDescription="Player 2"
+                android:scaleType="fitCenter"
+                android:alpha="0.3"
+                android:src="@drawable/ic_crown_player_win" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arcade"
+                    android:includeFontPadding="false"
+                    android:text="PLAYER 2"
+                    android:textColor="@color/bb_black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textWinnerP2Stats"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/arcade"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="3dp"
+                    android:text="SCORE     0&#10;TIME      0s&#10;COMBO     0x"
+                    android:textColor="@color/bb_black"
+                    android:textSize="13sp"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="9sp"
+                    app:autoSizeTextType="uniform" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bb_card_light"
+                    android:contentDescription="Player 2 avatar"
+                    android:padding="6dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_crown_player_win"
+                    android:alpha="0.4" />
+
+                <TextView
+                    android:id="@+id/textWinnerP2Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bb_panel_dark"
+                    android:fontFamily="@font/arcade"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:padding="3dp"
+                    android:text="Trisha"
+                    android:textColor="@color/bb_white"
+                    android:textSize="11sp"
+                    app:autoSizeMaxTextSize="12sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeTextType="uniform" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Hidden textWinnerStats for legacy compatibility -->
+        <TextView
+            android:id="@+id/textWinnerStats"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- PLAY AGAIN / MAIN MENU BUTTONS -->
+        <LinearLayout
+            android:id="@+id/winnerButtonRow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/buttonWinnerPlayAgain"
+                android:layout_width="220dp"
+                android:layout_height="@dimen/button_height"
+                android:background="@drawable/bb_button_green"
+                android:fontFamily="@font/arcade"
+                android:includeFontPadding="false"
+                android:text="@string/play_again"
+                android:textAllCaps="false"
+                android:textColor="@color/bb_white"
+                android:textSize="@dimen/button_text_size" />
+
+            <Button
+                android:id="@+id/buttonWinnerMainMenu"
+                android:layout_width="220dp"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginStart="@dimen/medium_gap"
+                android:background="@drawable/bb_button_gray"
+                android:fontFamily="@font/arcade"
+                android:includeFontPadding="false"
+                android:text="@string/main_menu"
+                android:textAllCaps="false"
+                android:textColor="@color/bb_white"
+                android:textSize="@dimen/button_text_size" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
