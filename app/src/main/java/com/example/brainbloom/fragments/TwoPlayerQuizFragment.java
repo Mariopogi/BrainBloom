@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +40,11 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
     private int activePlayerNumber = 1;
     private int timeLeft = GameConstants.QUESTION_TIME_SECONDS;
     private CountDownTimer timer;
+    private boolean acceptingAnswers = true;
+
+    private String player1Name = "Player 1";
+    private String player2Name = "Player 2";
+    private String difficulty = "Easy";
 
     private TextView textQuizBook;
     private TextView textTimer;
@@ -48,7 +52,10 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
     private TextView textQuestionNumber;
     private TextView textQuestion;
     private TextView textProgress;
-    private ImageView imageHearts;
+    private TextView textPlayer1Name;
+    private TextView textPlayer2Name;
+    private TextView textPlayer1Score;
+    private TextView textPlayer2Score;
     private Button buttonA;
     private Button buttonB;
     private Button buttonC;
@@ -63,11 +70,21 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        if (getArguments() != null) {
+            player1Name = getArguments().getString("PLAYER_1_NAME", "Player 1");
+            player2Name = getArguments().getString("PLAYER_2_NAME", "Player 2");
+            difficulty = getArguments().getString("DIFFICULTY", "Easy");
+        } else {
+            player1Name = session.getPlayerOne().getName();
+            player2Name = session.getPlayerTwo().getName();
+            difficulty = session.getDifficulty();
+        }
+
         bindViews(view);
 
-        FrameLayout root = view.findViewById(R.id.twoPlayerQuizRoot);
-        root.setBackgroundResource(R.drawable.bg_mountain_blossom);
-        imageHearts.setVisibility(View.GONE);
+        textPlayer1Name.setText(player1Name);
+        textPlayer2Name.setText(player2Name);
+        textQuizBook.setText("DIFFICULTY: " + difficulty.toUpperCase());
 
         view.findViewById(R.id.buttonPauseQuiz).setOnClickListener(v -> pauseQuiz());
 
@@ -82,7 +99,10 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
         textQuestionNumber = view.findViewById(R.id.textQuestionNumber);
         textQuestion = view.findViewById(R.id.textQuestion);
         textProgress = view.findViewById(R.id.textProgress);
-        imageHearts = view.findViewById(R.id.imageHearts);
+        textPlayer1Name = view.findViewById(R.id.textPlayer1Name);
+        textPlayer2Name = view.findViewById(R.id.textPlayer2Name);
+        textPlayer1Score = view.findViewById(R.id.textPlayer1Score);
+        textPlayer2Score = view.findViewById(R.id.textPlayer2Score);
         buttonA = view.findViewById(R.id.buttonChoiceA);
         buttonB = view.findViewById(R.id.buttonChoiceB);
         buttonC = view.findViewById(R.id.buttonChoiceC);
@@ -94,8 +114,19 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
     }
 
     private void loadQuestionsForActivePlayer() {
+        // Use book 1 questions for two-player mode with selected difficulty
         questions = BrainBloomDatabaseHelper.getInstance(requireContext())
-                .getRandomQuestions(2, session.getDifficulty(), GameConstants.QUESTION_COUNT_PER_BOOK);
+                .getRandomQuestions(1, difficulty, GameConstants.QUESTION_COUNT_PER_BOOK);
+
+        // Fallback: try any book if book 1 returns nothing
+        if (questions.isEmpty()) {
+            for (int book = 2; book <= 4; book++) {
+                questions = BrainBloomDatabaseHelper.getInstance(requireContext())
+                        .getRandomQuestions(book, difficulty, GameConstants.QUESTION_COUNT_PER_BOOK);
+                if (!questions.isEmpty()) break;
+            }
+        }
+
         currentIndex = 0;
     }
 
@@ -105,12 +136,12 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
             return;
         }
 
+        acceptingAnswers = true;
         setAnswerButtonsEnabled(true);
 
         Player player = getActivePlayer();
         Question question = questions.get(currentIndex);
 
-        textQuizBook.setText("PLAYER " + activePlayerNumber + "\n" + player.getName());
         textQuestionNumber.setText("QUESTION " + (currentIndex + 1) + " OUT " + questions.size());
         textQuestion.setText(question.getQuestionText());
 
@@ -150,6 +181,8 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
     }
 
     private void answerQuestion(String selectedAnswer) {
+        if (!acceptingAnswers) return;
+        acceptingAnswers = false;
         cancelTimer();
         setAnswerButtonsEnabled(false);
 
@@ -171,14 +204,15 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
         int points = scoreCalculator.calculateCorrectAnswerScore(timeLeft, player.getCurrentCombo());
         player.addScore(points);
 
-        Toast.makeText(requireContext(), "Correct Answer! +" + points, Toast.LENGTH_SHORT).show();
+        updateScoreDisplays();
+        Toast.makeText(requireContext(), "Correct! +" + points, Toast.LENGTH_SHORT).show();
         nextQuestionDelayed();
     }
 
     private void answerWrong() {
         SoundManager.getInstance(requireContext()).playSound(R.raw.wrong_answer);
         getActivePlayer().resetCombo();
-        Toast.makeText(requireContext(), "Wrong Answer!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), "Wrong!", Toast.LENGTH_SHORT).show();
         nextQuestionDelayed();
     }
 
@@ -194,21 +228,42 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
         cancelTimer();
 
         if (activePlayerNumber == 1) {
-            Toast.makeText(requireContext(), "Player 2 turn starts.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), player2Name + "'s turn!", Toast.LENGTH_LONG).show();
             activePlayerNumber = 2;
             loadQuestionsForActivePlayer();
-            handler.postDelayed(this::showQuestion, 900);
+            handler.postDelayed(this::showQuestion, 1200);
         } else {
             session.computeWinner();
-            NavHostFragment.findNavController(this).navigate(R.id.action_twoPlayerQuiz_to_winnerResult);
+
+            Player p1 = session.getPlayerOne();
+            Player p2 = session.getPlayerTwo();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("PLAYER_1_NAME", player1Name);
+            bundle.putString("PLAYER_2_NAME", player2Name);
+            bundle.putInt("PLAYER_1_SCORE", p1.getScore());
+            bundle.putInt("PLAYER_2_SCORE", p2.getScore());
+            bundle.putInt("PLAYER_1_TIME", p1.getTotalTimeLeft());
+            bundle.putInt("PLAYER_2_TIME", p2.getTotalTimeLeft());
+            bundle.putInt("PLAYER_1_COMBO", p1.getHighestCombo());
+            bundle.putInt("PLAYER_2_COMBO", p2.getHighestCombo());
+            bundle.putString("DIFFICULTY", difficulty);
+            bundle.putString("WINNER", session.getWinnerName());
+
+            NavHostFragment.findNavController(this).navigate(R.id.action_twoPlayerQuiz_to_winnerResult, bundle);
         }
     }
 
     private void updateProgress() {
         Player player = getActivePlayer();
+        String playerLabel = activePlayerNumber == 1 ? player1Name : player2Name;
         textCombo.setText("COMBO\n" + player.getCurrentCombo() + "x");
-        textProgress.setText("SCORE " + player.getScore() +
-                "\nHighest Combo: " + player.getHighestCombo() + "x");
+        textProgress.setText(playerLabel.toUpperCase() + "'S TURN   Q" + (currentIndex + 1) + "/" + questions.size());
+    }
+
+    private void updateScoreDisplays() {
+        textPlayer1Score.setText(String.valueOf(session.getPlayerOne().getScore()));
+        textPlayer2Score.setText(String.valueOf(session.getPlayerTwo().getScore()));
     }
 
     private void setAnswerButtonsEnabled(boolean enabled) {
@@ -231,6 +286,10 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
 
     @Override
     public void onRestartQuiz() {
+        activePlayerNumber = 1;
+        session.resetTwoPlayer(player1Name, player2Name, difficulty);
+        textPlayer1Score.setText("0");
+        textPlayer2Score.setText("0");
         loadQuestionsForActivePlayer();
         showQuestion();
     }
