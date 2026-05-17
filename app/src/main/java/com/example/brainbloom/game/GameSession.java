@@ -66,9 +66,13 @@ public class GameSession {
 
     public void saveTemporaryBookResult(QuizResult result) {
         bookResults.put(result.getBookNumber(), result);
-        if (result.isRestored() && result.getBookNumber() > completedBookCount) {
+        if (result.isRestored() && result.getBookNumber() >= completedBookCount) {
             completedBookCount = result.getBookNumber();
         }
+    }
+
+    public void resetBookScore(int bookNumber) {
+        bookResults.remove(bookNumber);
     }
 
     public QuizResult getBookResult(int bookNumber) {
@@ -95,7 +99,7 @@ public class GameSession {
         for (QuizResult result : bookResults.values()) {
             total += result.getScore();
         }
-        return total / 4;
+        return total;
     }
 
     public int getTotalTimeLeft() {

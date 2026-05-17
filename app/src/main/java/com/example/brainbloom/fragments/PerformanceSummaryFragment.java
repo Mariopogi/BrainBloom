@@ -80,11 +80,6 @@ public class PerformanceSummaryFragment extends Fragment {
             }
         });
 
-        view.findViewById(R.id.buttonPlayAgain).setOnClickListener(v -> {
-            SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
-            NavHostFragment.findNavController(this).navigate(R.id.action_performance_to_quiz);
-        });
-
         view.findViewById(R.id.buttonPerformanceBack).setOnClickListener(v -> {
             SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
             showLeaveWarningDialog();

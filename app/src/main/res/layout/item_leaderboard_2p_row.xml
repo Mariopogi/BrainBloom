@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
+    android:gravity="center_vertical"
+    android:weightSum="10">
+
+    <TextView
+        android:id="@+id/textColMatchup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3.2"
+        android:fontFamily="@font/arcade"
+        android:gravity="start"
+        android:text="P1 VS P2"
+        android:textColor="#000000"
+        android:textSize="8.5sp"
+        android:ellipsize="end"
+        android:maxLines="2" />
+
+    <TextView
+        android:id="@+id/textColWinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2.4"
+        android:fontFamily="@font/arcade"
+        android:gravity="center"
+        android:text="WINNER"
+        android:textColor="#000000"
+        android:textSize="8.5sp"
+        android:ellipsize="end"
+        android:maxLines="2" />
+
+    <TextView
+        android:id="@+id/textColResult"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2.4"
+        android:fontFamily="@font/arcade"
+        android:gravity="center"
+        android:text="100-200"
+        android:textColor="#000000"
+        android:textSize="8.5sp" />
+
+    <TextView
+        android:id="@+id/textColDifficulty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:fontFamily="@font/arcade"
+        android:gravity="end"
+        android:text="MEDIUM"
+        android:textColor="#000000"
+        android:textSize="8.5sp" />
+
+</LinearLayout>

@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.example.brainbloom.R;
+import com.example.brainbloom.utils.MusicManager;
 
 public class PauseDialogFragment extends DialogFragment {
 
@@ -41,6 +42,8 @@ public class PauseDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        MusicManager.getInstance(requireContext()).pauseMusic();
+
         Dialog dialog = new Dialog(requireContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -51,6 +54,7 @@ public class PauseDialogFragment extends DialogFragment {
         setCancelable(false);
 
         view.findViewById(R.id.buttonPauseResume).setOnClickListener(v -> {
+            MusicManager.getInstance(requireContext()).resumeMusic();
             PauseActionListener listener = getPauseActionListener();
             dismiss();
 

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
+    android:gravity="center_vertical"
+    android:weightSum="5">
+
+    <TextView
+        android:id="@+id/textColRank"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.8"
+        android:fontFamily="@font/arcade"
+        android:gravity="start"
+        android:text="1."
+        android:textColor="#000000"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/textColName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.8"
+        android:fontFamily="@font/arcade"
+        android:gravity="center"
+        android:text="PLAYER"
+        android:textColor="#000000"
+        android:textSize="11sp"
+        android:ellipsize="end"
+        android:maxLines="2" />
+
+    <TextView
+        android:id="@+id/textColScore"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.2"
+        android:fontFamily="@font/arcade"
+        android:gravity="center"
+        android:text="4500"
+        android:textColor="#000000"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/textColTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.2"
+        android:fontFamily="@font/arcade"
+        android:gravity="end"
+        android:text="120S"
+        android:textColor="#000000"
+        android:textSize="11sp" />
+
+</LinearLayout>

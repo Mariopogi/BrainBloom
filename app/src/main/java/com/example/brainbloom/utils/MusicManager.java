@@ -41,6 +41,18 @@ public class MusicManager {
         }
     }
 
+    public void pauseMusic() {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+        }
+    }
+
+    public void resumeMusic() {
+        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
+    }
+
     public void setMusicLevel(int level) {
         musicLevel = Math.max(0, Math.min(10, level));
         applyVolume();
