@@ -32,7 +32,8 @@ public class GameOverFragment extends Fragment {
         MusicManager.getInstance(requireContext()).playMusic(R.raw.bg_music_result_screen, true);
         SoundManager.getInstance(requireContext()).playSound(R.raw.game_over);
 
-        ((TextView) view.findViewById(R.id.textGameOverScore)).setText("FINAL SCORE\n" + session.getLastAttemptScore());
+        TextView textGameOverScore = view.findViewById(R.id.textGameOverScore);
+        textGameOverScore.setText(String.valueOf(session.getLastAttemptScore()));
 
         view.findViewById(R.id.buttonTryAgain).setOnClickListener(v -> {
             SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
