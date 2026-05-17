@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,6 +38,7 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private List<Question> questions = new ArrayList<>();
+
     private int currentIndex = 0;
     private int score = 0;
     private int correctCount = 0;
@@ -47,7 +47,11 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
     private int highestCombo = 0;
     private int totalTimeLeft = 0;
     private int timeLeft = GameConstants.QUESTION_TIME_SECONDS;
+
     private CountDownTimer timer;
+
+    private FrameLayout quizRoot;
+    private View currentFeedbackPopup;
 
     private TextView textQuizBook;
     private TextView textTimer;
@@ -55,11 +59,16 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
     private TextView textQuestionNumber;
     private TextView textQuestion;
     private TextView textProgress;
+
     private ImageView imageHearts;
+
     private Button buttonA;
     private Button buttonB;
     private Button buttonC;
     private Button buttonD;
+
+    private boolean feedbackShowing = false;
+    private boolean quizFinished = false;
 
     @Nullable
     @Override
@@ -73,30 +82,38 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
         bindViews(view);
 
         Book book = BookRepository.getBook(session.getSelectedBookNumber());
-        FrameLayout root = view.findViewById(R.id.quizRoot);
-        root.setBackgroundResource(book.getBackgroundDrawableRes());
+        quizRoot.setBackgroundResource(book.getBackgroundDrawableRes());
 
         questions = BrainBloomDatabaseHelper.getInstance(requireContext())
-                .getRandomQuestions(book.getBookNumber(), session.getDifficulty(), GameConstants.QUESTION_COUNT_PER_BOOK);
+                .getRandomQuestions(
+                        book.getBookNumber(),
+                        session.getDifficulty(),
+                        GameConstants.QUESTION_COUNT_PER_BOOK
+                );
 
         if (questions.isEmpty()) {
-            Toast.makeText(requireContext(), "No questions found for this book.", Toast.LENGTH_SHORT).show();
+            session.setLastAttemptScore(0);
             NavHostFragment.findNavController(this).navigate(R.id.action_quiz_to_gameOver);
             return;
         }
 
         view.findViewById(R.id.buttonPauseQuiz).setOnClickListener(v -> pauseQuiz());
+
         showQuestion();
     }
 
     private void bindViews(View view) {
+        quizRoot = view.findViewById(R.id.quizRoot);
+
         textQuizBook = view.findViewById(R.id.textQuizBook);
         textTimer = view.findViewById(R.id.textTimer);
         textCombo = view.findViewById(R.id.textCombo);
         textQuestionNumber = view.findViewById(R.id.textQuestionNumber);
         textQuestion = view.findViewById(R.id.textQuestion);
         textProgress = view.findViewById(R.id.textProgress);
+
         imageHearts = view.findViewById(R.id.imageHearts);
+
         buttonA = view.findViewById(R.id.buttonChoiceA);
         buttonB = view.findViewById(R.id.buttonChoiceB);
         buttonC = view.findViewById(R.id.buttonChoiceC);
@@ -104,11 +121,17 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
     }
 
     private void showQuestion() {
+        if (quizFinished) {
+            return;
+        }
+
         if (currentIndex >= questions.size()) {
             finishQuiz();
             return;
         }
 
+        removeFeedbackPopup();
+        feedbackShowing = false;
         setAnswerButtonsEnabled(true);
 
         Book book = BookRepository.getBook(session.getSelectedBookNumber());
@@ -118,10 +141,10 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
         textQuestionNumber.setText("QUESTION " + (currentIndex + 1) + " OUT " + questions.size());
         textQuestion.setText(question.getQuestionText());
 
-        buttonA.setText("A   " + question.getChoiceA());
-        buttonB.setText("B   " + question.getChoiceB());
-        buttonC.setText("C   " + question.getChoiceC());
-        buttonD.setText("D   " + question.getChoiceD());
+        buttonA.setText("A.   " + question.getChoiceA());
+        buttonB.setText("B.   " + question.getChoiceB());
+        buttonC.setText("C.   " + question.getChoiceC());
+        buttonD.setText("D.   " + question.getChoiceD());
 
         buttonA.setOnClickListener(v -> answerQuestion("A"));
         buttonB.setOnClickListener(v -> answerQuestion("B"));
@@ -135,10 +158,15 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
 
     private void startTimer(int seconds) {
         cancelTimer();
-        timeLeft = seconds;
+
+        if (quizFinished || feedbackShowing) {
+            return;
+        }
+
+        timeLeft = Math.max(seconds, 1);
         textTimer.setText(timeLeft + "s");
 
-        timer = new CountDownTimer(seconds * 1000L, 1000L) {
+        timer = new CountDownTimer(timeLeft * 1000L, 1000L) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeft = (int) (millisUntilFinished / 1000L);
@@ -151,14 +179,20 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
                 answerWrong();
             }
         };
+
         timer.start();
     }
 
     private void answerQuestion(String selectedAnswer) {
+        if (feedbackShowing || quizFinished) {
+            return;
+        }
+
         cancelTimer();
         setAnswerButtonsEnabled(false);
 
         Question question = questions.get(currentIndex);
+
         if (question.isCorrect(selectedAnswer)) {
             answerCorrect();
         } else {
@@ -167,49 +201,117 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
     }
 
     private void answerCorrect() {
+        if (feedbackShowing || quizFinished) {
+            return;
+        }
+
+        feedbackShowing = true;
+
         SoundManager.getInstance(requireContext()).playSound(R.raw.correct_answer);
+
         correctCount++;
         currentCombo++;
+
         if (currentCombo > highestCombo) {
             highestCombo = currentCombo;
         }
+
         int points = scoreCalculator.calculateCorrectAnswerScore(timeLeft, currentCombo);
         score += points;
         totalTimeLeft += timeLeft;
 
-        Toast.makeText(requireContext(), "Correct Answer! +" + points, Toast.LENGTH_SHORT).show();
-        nextQuestionDelayed();
+        updateProgress();
+
+        showFeedbackPopup(R.layout.popup_correct_answer, () -> {
+            currentIndex++;
+            showQuestion();
+        });
     }
 
     private void answerWrong() {
-        SoundManager.getInstance(requireContext()).playSound(R.raw.wrong_answer);
+        if (feedbackShowing || quizFinished) {
+            return;
+        }
+
+        feedbackShowing = true;
+
+        cancelTimer();
         setAnswerButtonsEnabled(false);
+
+        SoundManager.getInstance(requireContext()).playSound(R.raw.wrong_answer);
+
         lives--;
         currentCombo = 0;
-        updateHearts();
 
-        Toast.makeText(requireContext(), "Wrong Answer!", Toast.LENGTH_SHORT).show();
+        updateHearts();
+        updateProgress();
 
         if (lives <= 0) {
             session.setLastAttemptScore(score);
-            handler.postDelayed(() ->
-                    NavHostFragment.findNavController(this).navigate(R.id.action_quiz_to_gameOver), 800);
+
+            showFeedbackPopup(R.layout.popup_wrong_answer, () -> {
+                quizFinished = true;
+                NavHostFragment.findNavController(this).navigate(R.id.action_quiz_to_gameOver);
+            });
         } else {
-            nextQuestionDelayed();
+            showFeedbackPopup(R.layout.popup_wrong_answer, () -> {
+                currentIndex++;
+                showQuestion();
+            });
         }
     }
 
-    private void nextQuestionDelayed() {
-        updateProgress();
+    private void showFeedbackPopup(int layoutResId, Runnable afterPopup) {
+        removeFeedbackPopup();
+
+        if (!isAdded() || getView() == null) {
+            return;
+        }
+
+        currentFeedbackPopup = LayoutInflater.from(requireContext())
+                .inflate(layoutResId, quizRoot, false);
+
+        currentFeedbackPopup.setClickable(true);
+        currentFeedbackPopup.setFocusable(true);
+
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+        );
+
+        quizRoot.addView(currentFeedbackPopup, params);
+
         handler.postDelayed(() -> {
-            currentIndex++;
-            showQuestion();
+            removeFeedbackPopup();
+            feedbackShowing = false;
+
+            if (isAdded() && getView() != null && !quizFinished) {
+                afterPopup.run();
+            } else if (isAdded() && getView() != null) {
+                afterPopup.run();
+            }
         }, 900);
     }
 
+    private void removeFeedbackPopup() {
+        if (currentFeedbackPopup != null && currentFeedbackPopup.getParent() == quizRoot) {
+            quizRoot.removeView(currentFeedbackPopup);
+        }
+
+        currentFeedbackPopup = null;
+    }
+
     private void finishQuiz() {
+        if (quizFinished) {
+            return;
+        }
+
+        quizFinished = true;
         cancelTimer();
+        removeFeedbackPopup();
+
         boolean restored = correctCount >= GameConstants.RESTORE_TARGET;
+
         QuizResult result = new QuizResult(
                 session.getSelectedBookNumber(),
                 score,
@@ -232,9 +334,12 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
     }
 
     private void updateProgress() {
-        textCombo.setText("COMBO " + currentCombo + "x");
-        textProgress.setText("PROGRESS " + correctCount + "/" + GameConstants.QUESTION_COUNT_PER_BOOK
-                + "\nAnswer 7 correctly to restore the book");
+        textCombo.setText("COMBO\n" + currentCombo + "x");
+
+        textProgress.setText(
+                "PROGRESS " + correctCount + "/" + GameConstants.QUESTION_COUNT_PER_BOOK
+                        + "\nANSWER 7 CORRECTLY TO RESTORE THE BOOK"
+        );
     }
 
     private void updateHearts() {
@@ -257,23 +362,38 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
     }
 
     private void pauseQuiz() {
+        if (feedbackShowing || quizFinished) {
+            return;
+        }
+
         cancelTimer();
+
         PauseDialogFragment dialog = new PauseDialogFragment();
         dialog.show(getChildFragmentManager(), "pause_dialog");
     }
 
     @Override
     public void onResumeQuiz() {
-        startTimer(timeLeft > 0 ? timeLeft : GameConstants.QUESTION_TIME_SECONDS);
+        if (!quizFinished && !feedbackShowing) {
+            startTimer(timeLeft > 0 ? timeLeft : GameConstants.QUESTION_TIME_SECONDS);
+        }
     }
 
     @Override
     public void onRestartQuiz() {
+        cancelTimer();
+        handler.removeCallbacksAndMessages(null);
+        removeFeedbackPopup();
+
         NavHostFragment.findNavController(this).navigate(R.id.action_quiz_to_quiz);
     }
 
     @Override
     public void onReturnToMainMenu() {
+        cancelTimer();
+        handler.removeCallbacksAndMessages(null);
+        removeFeedbackPopup();
+
         session.resetAdventure();
         NavHostFragment.findNavController(this).navigate(R.id.action_quiz_to_mainMenu);
     }
@@ -288,7 +408,12 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
         cancelTimer();
         handler.removeCallbacksAndMessages(null);
+        removeFeedbackPopup();
+
+        currentFeedbackPopup = null;
+        quizRoot = null;
     }
 }

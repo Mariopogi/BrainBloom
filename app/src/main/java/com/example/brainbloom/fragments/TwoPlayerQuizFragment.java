@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,16 +35,24 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private List<Question> questions = new ArrayList<>();
+
     private int currentIndex = 0;
     private int activePlayerNumber = 1;
     private int timeLeft = GameConstants.QUESTION_TIME_SECONDS;
     private int lives = GameConstants.STARTING_LIVES;
+
     private CountDownTimer timer;
+
     private boolean acceptingAnswers = true;
+    private boolean feedbackShowing = false;
+    private boolean quizFinished = false;
 
     private String player1Name = "Player 1";
     private String player2Name = "Player 2";
     private String difficulty = "Easy";
+
+    private ViewGroup quizRoot;
+    private View currentFeedbackPopup;
 
     private TextView textQuizBook;
     private TextView textTimer;
@@ -57,7 +64,9 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
     private TextView textPlayer2Name;
     private TextView textPlayer1Score;
     private TextView textPlayer2Score;
+
     private ImageView imageHearts;
+
     private Button buttonA;
     private Button buttonB;
     private Button buttonC;
@@ -72,6 +81,8 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        quizRoot = (ViewGroup) view;
+
         if (getArguments() != null) {
             player1Name = getArguments().getString("PLAYER_1_NAME", "Player 1");
             player2Name = getArguments().getString("PLAYER_2_NAME", "Player 2");
@@ -92,6 +103,7 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
 
         loadQuestionsForActivePlayer();
         updatePlayerHighlight();
+        updateScoreDisplays();
         showQuestion();
     }
 
@@ -102,11 +114,14 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
         textQuestionNumber = view.findViewById(R.id.textQuestionNumber);
         textQuestion = view.findViewById(R.id.textQuestion);
         textProgress = view.findViewById(R.id.textProgress);
+
         textPlayer1Name = view.findViewById(R.id.textPlayer1Name);
         textPlayer2Name = view.findViewById(R.id.textPlayer2Name);
         textPlayer1Score = view.findViewById(R.id.textPlayer1Score);
         textPlayer2Score = view.findViewById(R.id.textPlayer2Score);
+
         imageHearts = view.findViewById(R.id.imageHearts);
+
         buttonA = view.findViewById(R.id.buttonChoiceA);
         buttonB = view.findViewById(R.id.buttonChoiceB);
         buttonC = view.findViewById(R.id.buttonChoiceC);
@@ -119,25 +134,37 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
 
     private void loadQuestionsForActivePlayer() {
         lives = GameConstants.STARTING_LIVES;
+
         questions = BrainBloomDatabaseHelper.getInstance(requireContext())
                 .getRandomQuestions(1, difficulty, GameConstants.QUESTION_COUNT_PER_BOOK);
+
         if (questions.isEmpty()) {
             for (int book = 2; book <= 4; book++) {
                 questions = BrainBloomDatabaseHelper.getInstance(requireContext())
                         .getRandomQuestions(book, difficulty, GameConstants.QUESTION_COUNT_PER_BOOK);
-                if (!questions.isEmpty()) break;
+
+                if (!questions.isEmpty()) {
+                    break;
+                }
             }
         }
+
         currentIndex = 0;
         updateHearts();
     }
 
     private void showQuestion() {
+        if (quizFinished) {
+            return;
+        }
+
         if (currentIndex >= questions.size()) {
             finishActivePlayerTurn();
             return;
         }
 
+        removeFeedbackPopup();
+        feedbackShowing = false;
         acceptingAnswers = true;
         setAnswerButtonsEnabled(true);
 
@@ -162,10 +189,15 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
 
     private void startTimer(int seconds) {
         cancelTimer();
-        timeLeft = seconds;
+
+        if (quizFinished || feedbackShowing) {
+            return;
+        }
+
+        timeLeft = Math.max(seconds, 1);
         textTimer.setText(timeLeft + "s");
 
-        timer = new CountDownTimer(seconds * 1000L, 1000L) {
+        timer = new CountDownTimer(timeLeft * 1000L, 1000L) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeft = (int) (millisUntilFinished / 1000L);
@@ -178,16 +210,21 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
                 answerWrong();
             }
         };
+
         timer.start();
     }
 
     private void answerQuestion(String selectedAnswer) {
-        if (!acceptingAnswers) return;
+        if (!acceptingAnswers || feedbackShowing || quizFinished) {
+            return;
+        }
+
         acceptingAnswers = false;
         cancelTimer();
         setAnswerButtonsEnabled(false);
 
         Question question = questions.get(currentIndex);
+
         if (question.isCorrect(selectedAnswer)) {
             answerCorrect();
         } else {
@@ -196,51 +233,116 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
     }
 
     private void answerCorrect() {
+        if (feedbackShowing || quizFinished) {
+            return;
+        }
+
+        feedbackShowing = true;
+
         SoundManager.getInstance(requireContext()).playSound(R.raw.correct_answer);
+
         Player player = getActivePlayer();
         player.addCorrectCombo();
         player.addTimeLeft(timeLeft);
+
         int points = scoreCalculator.calculateCorrectAnswerScore(timeLeft, player.getCurrentCombo());
         player.addScore(points);
+
         updateScoreDisplays();
         updateProgress();
-        Toast.makeText(requireContext(), "Correct! +" + points, Toast.LENGTH_SHORT).show();
-        nextQuestionDelayed();
+
+        showFeedbackPopup(R.layout.popup_correct_answer, () -> {
+            currentIndex++;
+            showQuestion();
+        });
     }
 
     private void answerWrong() {
+        if (feedbackShowing || quizFinished) {
+            return;
+        }
+
+        feedbackShowing = true;
+
+        cancelTimer();
+        setAnswerButtonsEnabled(false);
+
         SoundManager.getInstance(requireContext()).playSound(R.raw.wrong_answer);
+
         getActivePlayer().resetCombo();
         lives--;
+
         updateHearts();
         updateProgress();
-        Toast.makeText(requireContext(), "Wrong!", Toast.LENGTH_SHORT).show();
 
         if (lives <= 0) {
-            // Player used all lives — end their turn
-            handler.postDelayed(() -> finishActivePlayerTurn(), 800);
+            showFeedbackPopup(R.layout.popup_wrong_answer, this::finishActivePlayerTurn);
         } else {
-            nextQuestionDelayed();
+            showFeedbackPopup(R.layout.popup_wrong_answer, () -> {
+                currentIndex++;
+                showQuestion();
+            });
         }
     }
 
-    private void nextQuestionDelayed() {
+    private void showFeedbackPopup(int layoutResId, Runnable afterPopup) {
+        removeFeedbackPopup();
+
+        if (!isAdded() || getView() == null || quizRoot == null) {
+            return;
+        }
+
+        currentFeedbackPopup = LayoutInflater.from(requireContext())
+                .inflate(layoutResId, quizRoot, false);
+
+        currentFeedbackPopup.setClickable(true);
+        currentFeedbackPopup.setFocusable(true);
+
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        );
+
+        quizRoot.addView(currentFeedbackPopup, params);
+
         handler.postDelayed(() -> {
-            currentIndex++;
-            showQuestion();
-        }, 800);
+            removeFeedbackPopup();
+            feedbackShowing = false;
+
+            if (isAdded() && getView() != null) {
+                afterPopup.run();
+            }
+        }, 900);
+    }
+
+    private void removeFeedbackPopup() {
+        if (currentFeedbackPopup != null && quizRoot != null && currentFeedbackPopup.getParent() == quizRoot) {
+            quizRoot.removeView(currentFeedbackPopup);
+        }
+
+        currentFeedbackPopup = null;
     }
 
     private void finishActivePlayerTurn() {
         cancelTimer();
+        removeFeedbackPopup();
+        setAnswerButtonsEnabled(false);
+
+        if (quizFinished) {
+            return;
+        }
 
         if (activePlayerNumber == 1) {
-            Toast.makeText(requireContext(), player2Name + "'s turn!", Toast.LENGTH_LONG).show();
             activePlayerNumber = 2;
+            textProgress.setText(player2Name.toUpperCase() + "'S TURN!");
+
             loadQuestionsForActivePlayer();
             updatePlayerHighlight();
-            handler.postDelayed(this::showQuestion, 1200);
+
+            handler.postDelayed(this::showQuestion, 1000);
         } else {
+            quizFinished = true;
+
             session.computeWinner();
 
             Player p1 = session.getPlayerOne();
@@ -258,7 +360,8 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
             bundle.putString("DIFFICULTY", difficulty);
             bundle.putString("WINNER", session.getWinnerName());
 
-            NavHostFragment.findNavController(this).navigate(R.id.action_twoPlayerQuiz_to_winnerResult, bundle);
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_twoPlayerQuiz_to_winnerResult, bundle);
         }
     }
 
@@ -274,30 +377,39 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
         }
     }
 
-    /**
-     * Visually highlight the active player's card (brighter) vs the waiting player (dimmed).
-     * We do this by toggling alpha on the player card containers.
-     */
     private void updatePlayerHighlight() {
-        if (getView() == null) return;
-        // Player panels are inside the LinearLayout with id playerPanelColumn
-        // Child 0 = Player 1 card, Child 1 = Player 2 card
-        ViewGroup col = getView().findViewById(R.id.playerPanelColumn);
-        if (col == null || col.getChildCount() < 2) return;
-        View p1card = col.getChildAt(0);
-        View p2card = col.getChildAt(1);
+        if (getView() == null) {
+            return;
+        }
+
+        ViewGroup column = getView().findViewById(R.id.playerPanelColumn);
+
+        if (column == null || column.getChildCount() < 2) {
+            return;
+        }
+
+        View playerOneCard = column.getChildAt(0);
+        View playerTwoCard = column.getChildAt(1);
+
         if (activePlayerNumber == 1) {
-            p1card.setAlpha(1.0f);
-            p2card.setAlpha(0.45f);
+            playerOneCard.setAlpha(1.0f);
+            playerTwoCard.setAlpha(0.45f);
         } else {
-            p1card.setAlpha(0.45f);
-            p2card.setAlpha(1.0f);
+            playerOneCard.setAlpha(0.45f);
+            playerTwoCard.setAlpha(1.0f);
         }
     }
 
     private void updateProgress() {
         Player player = getActivePlayer();
+
         textCombo.setText(player.getCurrentCombo() + "x");
+
+        textProgress.setText(
+                "PLAYER " + activePlayerNumber
+                        + "   QUESTION " + Math.min(currentIndex + 1, GameConstants.QUESTION_COUNT_PER_BOOK)
+                        + "/" + GameConstants.QUESTION_COUNT_PER_BOOK
+        );
     }
 
     private void updateScoreDisplays() {
@@ -313,22 +425,41 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
     }
 
     private void pauseQuiz() {
+        if (feedbackShowing || quizFinished) {
+            return;
+        }
+
         cancelTimer();
+
         PauseDialogFragment dialog = new PauseDialogFragment();
         dialog.show(getChildFragmentManager(), "two_player_pause_dialog");
     }
 
     @Override
     public void onResumeQuiz() {
-        startTimer(timeLeft > 0 ? timeLeft : GameConstants.QUESTION_TIME_SECONDS);
+        if (!quizFinished && !feedbackShowing) {
+            startTimer(timeLeft > 0 ? timeLeft : GameConstants.QUESTION_TIME_SECONDS);
+        }
     }
 
     @Override
     public void onRestartQuiz() {
+        cancelTimer();
+        handler.removeCallbacksAndMessages(null);
+        removeFeedbackPopup();
+
+        quizFinished = false;
+        feedbackShowing = false;
+        acceptingAnswers = true;
+
         activePlayerNumber = 1;
+
         session.resetTwoPlayer(player1Name, player2Name, difficulty);
+
         textPlayer1Score.setText("0");
         textPlayer2Score.setText("0");
+        textQuizBook.setText("DIFFICULTY: " + difficulty.toUpperCase());
+
         loadQuestionsForActivePlayer();
         updatePlayerHighlight();
         showQuestion();
@@ -336,6 +467,10 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
 
     @Override
     public void onReturnToMainMenu() {
+        cancelTimer();
+        handler.removeCallbacksAndMessages(null);
+        removeFeedbackPopup();
+
         NavHostFragment.findNavController(this).navigate(R.id.action_twoPlayerQuiz_to_mainMenu);
     }
 
@@ -349,7 +484,12 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
         cancelTimer();
         handler.removeCallbacksAndMessages(null);
+        removeFeedbackPopup();
+
+        currentFeedbackPopup = null;
+        quizRoot = null;
     }
 }

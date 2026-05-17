@@ -1,16 +1,21 @@
 package com.example.brainbloom.fragments;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -41,31 +46,40 @@ public class PerformanceSummaryFragment extends Fragment {
         QuizResult result = session.getCurrentBookResult();
 
         FrameLayout root = view.findViewById(R.id.performanceRoot);
-        root.setBackgroundResource(book.getBackgroundDrawableRes());
+        TextView textPerformanceTitle = view.findViewById(R.id.textPerformanceTitle);
+        TextView textPerformanceStats = view.findViewById(R.id.textPerformanceStats);
+        TextView buttonNextBook = view.findViewById(R.id.buttonNextBook);
+        ImageView imagePerformanceObject = view.findViewById(R.id.imagePerformanceObject);
 
-        ((TextView) view.findViewById(R.id.textPerformanceTitle)).setText(book.getTitle() + " COMPLETED");
-        ((ImageView) view.findViewById(R.id.imagePerformanceObject)).setImageResource(book.getObjectDrawableRes());
+        root.setBackgroundResource(book.getBackgroundDrawableRes());
+        textPerformanceTitle.setText(book.getTitle() + " COMPLETED!");
+        imagePerformanceObject.setImageResource(book.getObjectDrawableRes());
 
         if (result != null) {
-            ((TextView) view.findViewById(R.id.textPerformanceStats)).setText(
-                    "Time Left: " + result.getTimeLeft() + "s\n" +
-                            "Correct Answers: " + result.getCorrectCount() + "\n" +
-                            "Highest Combo: " + result.getHighestCombo() + "x\n" +
-                            "Score: " + result.getScore()
+            textPerformanceStats.setText(
+                    "TIME LEFT: " + result.getTimeLeft() + "s\n" +
+                            "CORRECT ANSWERS: " + result.getCorrectCount() + "\n" +
+                            "HIGHEST COMBO: " + result.getHighestCombo() + "x\n" +
+                            "SCORE: " + result.getScore()
             );
         }
 
         if (book.getBookNumber() == 4) {
-            ((TextView) view.findViewById(R.id.buttonNextBook)).setText(R.string.book_completed);
+            buttonNextBook.setText(R.string.book_completed);
+        } else {
+            buttonNextBook.setText("NEXT BOOK");
         }
 
-        view.findViewById(R.id.buttonNextBook).setOnClickListener(v -> {
+        buttonNextBook.setOnClickListener(v -> {
             SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
+
             if (book.getBookNumber() == 4) {
-                NavHostFragment.findNavController(this).navigate(R.id.action_performance_to_allBooksRestored);
+                NavHostFragment.findNavController(this)
+                        .navigate(R.id.action_performance_to_allBooksRestored);
             } else {
                 session.setSelectedBookNumber(book.getBookNumber() + 1);
-                NavHostFragment.findNavController(this).navigate(R.id.action_performance_to_bookSelection);
+                NavHostFragment.findNavController(this)
+                        .navigate(R.id.action_performance_to_bookSelection);
             }
         });
 
@@ -74,16 +88,65 @@ public class PerformanceSummaryFragment extends Fragment {
             NavHostFragment.findNavController(this).navigate(R.id.action_performance_to_quiz);
         });
 
-        view.findViewById(R.id.buttonPerformanceBack).setOnClickListener(v -> showLeaveWarning());
+        view.findViewById(R.id.buttonPerformanceBack).setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
+            showLeaveWarningDialog();
+        });
     }
 
-    private void showLeaveWarning() {
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Are you sure you want to go back?")
-                .setMessage(R.string.warning_exit_progress)
-                .setPositiveButton("Go Back", (dialog, which) ->
-                        NavHostFragment.findNavController(this).navigate(R.id.action_performance_to_bookSelection))
-                .setNegativeButton("Cancel", null)
-                .show();
+    private void showLeaveWarningDialog() {
+        Dialog dialog = new Dialog(requireContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        View dialogView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_confirm_navigation, null);
+
+        TextView txtConfirmTitle = dialogView.findViewById(R.id.txtConfirmTitle);
+        TextView txtConfirmMessage = dialogView.findViewById(R.id.txtConfirmMessage);
+        TextView btnConfirmAction = dialogView.findViewById(R.id.btnConfirmAction);
+        TextView btnCancelConfirmNavigation = dialogView.findViewById(R.id.btnCancelConfirmNavigation);
+
+        txtConfirmTitle.setText("Are you sure you want to go back?");
+        txtConfirmMessage.setText(R.string.warning_exit_progress);
+        btnConfirmAction.setText("GO BACK");
+
+        btnConfirmAction.setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
+            dialog.dismiss();
+
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_performance_to_bookSelection);
+        });
+
+        btnCancelConfirmNavigation.setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
+            dialog.dismiss();
+        });
+
+        dialog.setContentView(dialogView);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(true);
+
+        dialog.setOnShowListener(dialogInterface -> {
+            Window window = dialog.getWindow();
+
+            if (window == null) {
+                return;
+            }
+
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            window.setGravity(Gravity.CENTER);
+
+            WindowManager.LayoutParams params = window.getAttributes();
+            params.width = WindowManager.LayoutParams.MATCH_PARENT;
+            params.height = WindowManager.LayoutParams.MATCH_PARENT;
+            params.gravity = Gravity.CENTER;
+            params.dimAmount = 0.0f;
+
+            window.setAttributes(params);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        });
+
+        dialog.show();
     }
 }

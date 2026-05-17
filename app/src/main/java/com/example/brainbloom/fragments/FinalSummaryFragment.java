@@ -39,11 +39,17 @@ public class FinalSummaryFragment extends Fragment {
         int totalTime = session.getTotalTimeLeft();
         int highestCombo = session.getHighestCombo();
 
-        ((TextView) view.findViewById(R.id.textFinalStats)).setText(
-                "Books Restored: " + session.getCompletedBookCount() + "\n" +
-                        "Overall Score: " + finalScore + "\n" +
-                        "Total Time Left: " + totalTime + "s\n" +
-                        "Highest Combo: " + highestCombo + "x"
+        ((TextView) view.findViewById(R.id.textBooksRestoredValue)).setText(
+                session.getCompletedBookCount() + "/4"
+        );
+        ((TextView) view.findViewById(R.id.textOverallScoreValue)).setText(
+                String.valueOf(finalScore)
+        );
+        ((TextView) view.findViewById(R.id.textTotalTimeLeftValue)).setText(
+                totalTime + "s"
+        );
+        ((TextView) view.findViewById(R.id.textHighestComboValue)).setText(
+                highestCombo + "x"
         );
 
         if (session.allBooksCompleted() && !session.isFinalSinglePlayerSaved()) {
@@ -62,6 +68,12 @@ public class FinalSummaryFragment extends Fragment {
             BrainBloomDatabaseHelper.getInstance(requireContext()).saveLeaderboardRecord(record);
             session.setFinalSinglePlayerSaved(true);
         }
+
+        view.findViewById(R.id.buttonFinalPlayAgain).setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
+            session.resetAdventure();
+            NavHostFragment.findNavController(this).navigate(R.id.action_finalSummary_to_bookSelection);
+        });
 
         view.findViewById(R.id.buttonFinalMainMenu).setOnClickListener(v -> {
             SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);

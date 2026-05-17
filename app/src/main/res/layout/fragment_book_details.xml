@@ -26,15 +26,17 @@
             android:padding="4dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_button_back"
+            app:layout_constraintBottom_toBottomOf="@id/textBookTitle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/textBookTitle" />
 
         <TextView
             android:id="@+id/textBookTitle"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_marginStart="58dp"
-            android:layout_marginEnd="18dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="64dp"
             android:background="@drawable/bb_top_strip"
             android:fontFamily="@font/arcade"
             android:gravity="center"
@@ -49,7 +51,7 @@
             app:autoSizeMinTextSize="13sp"
             app:autoSizeTextType="uniform"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/buttonBookDetailsBack"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
@@ -57,7 +59,7 @@
             android:layout_width="0dp"
             android:layout_height="168dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="28dp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/bb_card_light"
             android:gravity="center_vertical"
@@ -172,7 +174,7 @@
             android:id="@+id/buttonStartBookQuiz"
             android:layout_width="320dp"
             android:layout_height="48dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="28dp"
             android:background="@drawable/bb_button_green"
             android:backgroundTint="@null"
             android:fontFamily="@font/arcade"

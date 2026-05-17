@@ -1,16 +1,21 @@
 package com.example.brainbloom.fragments;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -39,12 +44,19 @@ public class BookDetailsFragment extends Fragment {
         FrameLayout root = view.findViewById(R.id.bookDetailsRoot);
         root.setBackgroundResource(book.getBackgroundDrawableRes());
 
-        ((TextView) view.findViewById(R.id.textBookTitle)).setText(book.getTitle());
-        ((TextView) view.findViewById(R.id.textBookCategory)).setText("CATEGORY: " + book.getCategory());
-        ((TextView) view.findViewById(R.id.textBookGoal)).setText("GOAL: Restore the garden by answering questions.");
-        ((TextView) view.findViewById(R.id.textBookQuestions)).setText("QUESTIONS: " + book.getQuestionCount());
-        ((TextView) view.findViewById(R.id.textBookReward)).setText("REWARD: " + book.getReward());
-        ((ImageView) view.findViewById(R.id.imageBookObject)).setImageResource(book.getObjectDrawableRes());
+        TextView textBookTitle = view.findViewById(R.id.textBookTitle);
+        TextView textBookCategory = view.findViewById(R.id.textBookCategory);
+        TextView textBookGoal = view.findViewById(R.id.textBookGoal);
+        TextView textBookQuestions = view.findViewById(R.id.textBookQuestions);
+        TextView textBookReward = view.findViewById(R.id.textBookReward);
+        ImageView imageBookObject = view.findViewById(R.id.imageBookObject);
+
+        textBookTitle.setText(book.getTitle());
+        textBookCategory.setText("CATEGORY: " + book.getCategory());
+        textBookGoal.setText("GOAL: Restore the garden by answering questions.");
+        textBookQuestions.setText("QUESTIONS: " + book.getQuestionCount());
+        textBookReward.setText("REWARD: " + book.getReward());
+        imageBookObject.setImageResource(book.getObjectDrawableRes());
 
         view.findViewById(R.id.buttonStartBookQuiz).setOnClickListener(v -> {
             SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
@@ -52,7 +64,10 @@ public class BookDetailsFragment extends Fragment {
             NavHostFragment.findNavController(this).navigate(R.id.action_bookDetails_to_quiz);
         });
 
-        view.findViewById(R.id.buttonBookDetailsBack).setOnClickListener(v -> showBackWarning());
+        view.findViewById(R.id.buttonBookDetailsBack).setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
+            showGoBackConfirmDialog();
+        });
     }
 
     private int getQuizMusic(int bookNumber) {
@@ -69,13 +84,63 @@ public class BookDetailsFragment extends Fragment {
         }
     }
 
-    private void showBackWarning() {
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Are you sure you want to go back?")
-                .setMessage(R.string.warning_exit_progress)
-                .setPositiveButton("Go Back", (dialog, which) ->
-                        NavHostFragment.findNavController(this).navigate(R.id.action_bookDetails_to_bookSelection))
-                .setNegativeButton("Cancel", null)
-                .show();
+    private void showGoBackConfirmDialog() {
+        Dialog dialog = new Dialog(requireContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        View dialogView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_confirm_navigation, null);
+
+        TextView txtConfirmTitle = dialogView.findViewById(R.id.txtConfirmTitle);
+        TextView txtConfirmMessage = dialogView.findViewById(R.id.txtConfirmMessage);
+        TextView btnConfirmAction = dialogView.findViewById(R.id.btnConfirmAction);
+        TextView btnCancelConfirmNavigation = dialogView.findViewById(R.id.btnCancelConfirmNavigation);
+
+        txtConfirmTitle.setText("Are you sure you want to go back?");
+        txtConfirmMessage.setText(getString(R.string.warning_exit_progress));
+        btnConfirmAction.setText("GO BACK");
+
+        btnConfirmAction.setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
+            dialog.dismiss();
+            NavHostFragment.findNavController(this).navigate(R.id.action_bookDetails_to_bookSelection);
+        });
+
+        btnCancelConfirmNavigation.setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
+            dialog.dismiss();
+        });
+
+        dialog.setContentView(dialogView);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(true);
+
+        Window window = dialog.getWindow();
+
+        if (window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        dialog.setOnShowListener(dialogInterface -> {
+            Window shownWindow = dialog.getWindow();
+
+            if (shownWindow == null) {
+                return;
+            }
+
+            shownWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            shownWindow.setGravity(Gravity.CENTER);
+
+            WindowManager.LayoutParams params = shownWindow.getAttributes();
+            params.width = WindowManager.LayoutParams.MATCH_PARENT;
+            params.height = WindowManager.LayoutParams.MATCH_PARENT;
+            params.gravity = Gravity.CENTER;
+            params.dimAmount = 0.0f;
+
+            shownWindow.setAttributes(params);
+            shownWindow.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        });
+
+        dialog.show();
     }
 }

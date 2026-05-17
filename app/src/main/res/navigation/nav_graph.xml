@@ -69,6 +69,7 @@
         android:name="com.example.brainbloom.fragments.FinalSummaryFragment"
         android:label="Final Summary">
         <action android:id="@+id/action_finalSummary_to_mainMenu" app:destination="@id/mainMenuFragment" app:popUpTo="@id/mainMenuFragment" app:popUpToInclusive="false" />
+        <action android:id="@+id/action_finalSummary_to_bookSelection" app:destination="@id/bookSelectionFragment" app:popUpTo="@id/mainMenuFragment" app:popUpToInclusive="false" />
     </fragment>
 
     <fragment
