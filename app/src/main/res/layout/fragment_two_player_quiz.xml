@@ -57,8 +57,8 @@
             <!-- Hearts (3 hearts image, shows current player's HP) -->
             <ImageView
                 android:id="@+id/imageHearts"
-                android:layout_width="90dp"
-                android:layout_height="36dp"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
                 android:layout_marginStart="6dp"
                 android:contentDescription="Hearts"
                 android:scaleType="fitCenter"
@@ -66,8 +66,8 @@
 
             <!-- Timer -->
             <LinearLayout
-                android:layout_width="54dp"
-                android:layout_height="44dp"
+                android:layout_width="70dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="6dp"
                 android:background="@drawable/bb_button_blue"
                 android:gravity="center"
@@ -79,13 +79,13 @@
                     android:fontFamily="@font/arcade"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="⏱"
+                    android:text="⏱️"
                     android:textColor="@color/bb_white"
                     android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/textTimer"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/arcade"
                     android:gravity="center"
@@ -99,8 +99,8 @@
 
             <!-- Combo -->
             <LinearLayout
-                android:layout_width="54dp"
-                android:layout_height="44dp"
+                android:layout_width="70dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="6dp"
                 android:background="@drawable/bb_button_blue"
                 android:gravity="center"
@@ -133,8 +133,8 @@
             <!-- Pause button -->
             <ImageButton
                 android:id="@+id/buttonPauseQuiz"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+                android:layout_width="70dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="6dp"
                 android:background="@drawable/bb_panel_dark"
                 android:contentDescription="Pause"
@@ -166,94 +166,105 @@
                 android:layout_height="0dp"
                 android:layout_marginBottom="6dp"
                 android:layout_weight="1"
-                android:background="#DD1A3A8A"
+                android:background="@color/bb_blue"
                 android:gravity="center"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
-                <!-- Person icon white box -->
-                <LinearLayout
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:background="#FFFFFFFF"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="👤"
-                        android:textSize="24sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:fontFamily="@font/arcade"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="PLAYER 1"
-                    android:textColor="#FFD700"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-
-                <!-- Name pill -->
-                <TextView
-                    android:id="@+id/textPlayer1Name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:background="#AA000000"
-                    android:fontFamily="@font/arcade"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:padding="3dp"
-                    android:text="Player 1"
-                    android:textColor="#FFFFFF"
-                    android:textSize="11sp"
-                    app:autoSizeMaxTextSize="12sp"
-                    app:autoSizeMinTextSize="8sp"
-                    app:autoSizeTextType="uniform" />
-
-                <!-- Score label -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:fontFamily="@font/arcade"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="SCORE"
-                    android:textColor="#FFFFFF"
-                    android:textSize="10sp" />
-
-                <!-- Score value box -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bb_card_light"
                     android:gravity="center"
-                    android:layout_marginTop="3dp">
+                    android:orientation="vertical"
+                    android:padding="8dp" >
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/ic_player"/>
 
                     <TextView
-                        android:id="@+id/textPlayer1Score"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:fontFamily="@font/arcade"
                         android:gravity="center"
                         android:includeFontPadding="false"
-                        android:text="0"
-                        android:textColor="#FF8847"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:autoSizeMaxTextSize="22sp"
-                        app:autoSizeMinTextSize="12sp"
-                        app:autoSizeTextType="uniform" />
+                        android:text="PLAYER 1"
+                        android:textColor="#FFD700"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
 
+                    <!-- Name pill -->
+                    <TextView
+                        android:id="@+id/textPlayer1Name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="#AA000000"
+                        android:fontFamily="@font/arcade"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:padding="3dp"
+                        android:text="Player 1"
+                        android:textColor="#FFFFFF"
+                        android:textSize="11sp"
+                        app:autoSizeMaxTextSize="12sp"
+                        app:autoSizeMinTextSize="8sp"
+                        app:autoSizeTextType="uniform" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp" >
+
+                    <!-- Score label -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/arcade"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="SCORE"
+                        android:textColor="#FFFFFF"
+                        android:textSize="10sp" />
+
+                    <!-- Score value box -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bb_card_light"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/textPlayer1Score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/arcade"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="0"
+                            android:textColor="#FF8847"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:autoSizeMaxTextSize="22sp"
+                            app:autoSizeMinTextSize="12sp"
+                            app:autoSizeTextType="uniform" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -262,93 +273,105 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="#DD8B1A1A"
+                android:background="@color/bb_red"
                 android:gravity="center"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
-                <!-- Person icon white box -->
-                <LinearLayout
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:background="#66FFFFFF"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="👤"
-                        android:textSize="24sp"
-                        android:alpha="0.5" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:fontFamily="@font/arcade"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="PLAYER 2"
-                    android:textColor="#FFAAAA"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-
-                <!-- Name pill -->
-                <TextView
-                    android:id="@+id/textPlayer2Name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:background="#66000000"
-                    android:fontFamily="@font/arcade"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:padding="3dp"
-                    android:text="Player 2"
-                    android:textColor="#AAAAAA"
-                    android:textSize="11sp"
-                    app:autoSizeMaxTextSize="12sp"
-                    app:autoSizeMinTextSize="8sp"
-                    app:autoSizeTextType="uniform" />
-
-                <!-- Score label -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:fontFamily="@font/arcade"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="SCORE"
-                    android:textColor="#AAAAAA"
-                    android:textSize="10sp" />
-
-                <!-- Score value box -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
                     android:layout_weight="1"
-                    android:background="#66FFFFFF"
                     android:gravity="center"
-                    android:layout_marginTop="3dp">
+                    android:orientation="vertical"
+                    android:padding="8dp" >
+
+                    <!-- Person icon white box -->
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/ic_player"/>
 
                     <TextView
-                        android:id="@+id/textPlayer2Score"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:fontFamily="@font/arcade"
                         android:gravity="center"
                         android:includeFontPadding="false"
-                        android:text="0"
-                        android:textColor="#AA8847"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:autoSizeMaxTextSize="22sp"
-                        app:autoSizeMinTextSize="12sp"
+                        android:text="PLAYER 2"
+                        android:textColor="#FFAAAA"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <!-- Name pill -->
+                    <TextView
+                        android:id="@+id/textPlayer2Name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="#66000000"
+                        android:fontFamily="@font/arcade"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:padding="3dp"
+                        android:text="Player 2"
+                        android:textColor="#AAAAAA"
+                        android:textSize="11sp"
+                        app:autoSizeMaxTextSize="12sp"
+                        app:autoSizeMinTextSize="8sp"
                         app:autoSizeTextType="uniform" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp" >
+
+                    <!-- Score label -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/arcade"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="SCORE"
+                        android:textColor="#AAAAAA"
+                        android:textSize="10sp" />
+
+                    <!-- Score value box -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bb_card_light"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/textPlayer2Score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/arcade"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="0"
+                            android:textColor="#AA8847"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:autoSizeMaxTextSize="22sp"
+                            app:autoSizeMinTextSize="12sp"
+                            app:autoSizeTextType="uniform" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -365,8 +388,8 @@
             android:id="@+id/textQuestionNumber"
             android:layout_width="0dp"
             android:layout_height="28dp"
-            android:layout_marginTop="8dp"
             android:layout_marginStart="6dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/bb_card_light"
             android:fontFamily="@font/arcade"
             android:gravity="center_vertical"
@@ -387,11 +410,11 @@
         <TextView
             android:id="@+id/textQuestion"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="100dp"
             android:layout_marginStart="6dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/bb_card_light"
+            android:background="@drawable/bb_panel_light_rect"
             android:fontFamily="@font/arcade"
             android:gravity="center_vertical"
             android:includeFontPadding="false"
@@ -422,8 +445,8 @@
             android:gravity="center_vertical"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:minHeight="0dp"
             android:minWidth="0dp"
+            android:minHeight="0dp"
             android:paddingStart="14dp"
             android:paddingEnd="10dp"
             android:stateListAnimator="@null"
@@ -452,8 +475,8 @@
             android:gravity="center_vertical"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:minHeight="0dp"
             android:minWidth="0dp"
+            android:minHeight="0dp"
             android:paddingStart="14dp"
             android:paddingEnd="10dp"
             android:stateListAnimator="@null"
@@ -481,8 +504,8 @@
             android:gravity="center_vertical"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:minHeight="0dp"
             android:minWidth="0dp"
+            android:minHeight="0dp"
             android:paddingStart="14dp"
             android:paddingEnd="10dp"
             android:stateListAnimator="@null"
@@ -509,8 +532,8 @@
             android:gravity="center_vertical"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:minHeight="0dp"
             android:minWidth="0dp"
+            android:minHeight="0dp"
             android:paddingStart="14dp"
             android:paddingEnd="10dp"
             android:stateListAnimator="@null"

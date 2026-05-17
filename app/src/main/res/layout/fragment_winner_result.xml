@@ -118,19 +118,10 @@
                     android:orientation="vertical">
 
                     <!-- Person icon white box -->
-                    <LinearLayout
-                        android:layout_width="52dp"
-                        android:layout_height="52dp"
-                        android:background="#FFFFFFFF"
-                        android:gravity="center">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="👤"
-                            android:textSize="26sp" />
-
-                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/ic_player"/>
 
                     <TextView
                         android:id="@+id/textWinnerP1Name"
@@ -223,19 +214,10 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="52dp"
-                        android:layout_height="52dp"
-                        android:background="#FFFFFFFF"
-                        android:gravity="center">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="👤"
-                            android:textSize="26sp" />
-
-                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/ic_player"/>
 
                     <TextView
                         android:id="@+id/textWinnerP2Name"
@@ -283,8 +265,8 @@
                     android:background="@drawable/bb_button_green"
                     android:fontFamily="@font/arcade"
                     android:includeFontPadding="false"
-                    android:minHeight="0dp"
                     android:minWidth="0dp"
+                    android:minHeight="0dp"
                     android:stateListAnimator="@null"
                     android:text="@string/play_again"
                     android:textAllCaps="false"
@@ -299,8 +281,8 @@
                     android:background="@drawable/bb_button_gray"
                     android:fontFamily="@font/arcade"
                     android:includeFontPadding="false"
-                    android:minHeight="0dp"
                     android:minWidth="0dp"
+                    android:minHeight="0dp"
                     android:stateListAnimator="@null"
                     android:text="@string/main_menu"
                     android:textAllCaps="false"
