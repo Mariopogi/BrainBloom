@@ -1,12 +1,18 @@
 package com.example.brainbloom.fragments;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -252,10 +258,7 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
         if (lives <= 0) {
             session.setLastAttemptScore(score);
 
-            showFeedbackPopup(popupLayout, () -> {
-                quizFinished = true;
-                NavHostFragment.findNavController(this).navigate(R.id.action_quiz_to_gameOver);
-            });
+            showFeedbackPopup(popupLayout, this::finishQuiz);
         } else {
             showFeedbackPopup(popupLayout, () -> {
                 currentIndex++;
@@ -341,7 +344,7 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
 
         textProgress.setText(
                 "PROGRESS " + correctCount + "/" + GameConstants.QUESTION_COUNT_PER_BOOK
-                        + "\nANSWER 7 CORRECTLY TO RESTORE THE BOOK"
+                        + "\nANSWER " + GameConstants.RESTORE_TARGET + " CORRECTLY TO RESTORE THE BOOK"
         );
     }
 
@@ -388,7 +391,8 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
         handler.removeCallbacksAndMessages(null);
         removeFeedbackPopup();
 
-        NavHostFragment.findNavController(this).navigate(R.id.action_quiz_to_quiz);
+        session.resetBookScore(session.getSelectedBookNumber());
+        NavHostFragment.findNavController(this).navigate(R.id.action_quiz_to_bookSelection);
     }
 
     @Override
@@ -397,8 +401,63 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
         handler.removeCallbacksAndMessages(null);
         removeFeedbackPopup();
 
-        session.resetAdventure();
-        NavHostFragment.findNavController(this).navigate(R.id.action_quiz_to_mainMenu);
+        showLeaveWarning();
+    }
+
+    private void showLeaveWarning() {
+        Dialog dialog = new Dialog(requireContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        View dialogView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_confirm_navigation, null);
+
+        TextView txtConfirmTitle = dialogView.findViewById(R.id.txtConfirmTitle);
+        TextView txtConfirmMessage = dialogView.findViewById(R.id.txtConfirmMessage);
+        TextView btnConfirmAction = dialogView.findViewById(R.id.btnConfirmAction);
+        TextView btnCancelConfirmNavigation = dialogView.findViewById(R.id.btnCancelConfirmNavigation);
+
+        txtConfirmTitle.setText("Are you sure you want to go to Main Menu?");
+        txtConfirmMessage.setText(R.string.warning_exit_progress);
+        btnConfirmAction.setText("GO TO MAIN MENU");
+
+        btnConfirmAction.setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
+            dialog.dismiss();
+            session.resetAdventure();
+            NavHostFragment.findNavController(this).navigate(R.id.action_quiz_to_mainMenu);
+        });
+
+        btnCancelConfirmNavigation.setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
+            dialog.dismiss();
+            onResumeQuiz();
+        });
+
+        dialog.setContentView(dialogView);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(true);
+
+        dialog.setOnShowListener(dialogInterface -> {
+            Window window = dialog.getWindow();
+
+            if (window == null) {
+                return;
+            }
+
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            window.setGravity(Gravity.CENTER);
+
+            WindowManager.LayoutParams params = window.getAttributes();
+            params.width = WindowManager.LayoutParams.MATCH_PARENT;
+            params.height = WindowManager.LayoutParams.MATCH_PARENT;
+            params.gravity = Gravity.CENTER;
+            params.dimAmount = 0.0f;
+
+            window.setAttributes(params);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        });
+
+        dialog.show();
     }
 
     private void cancelTimer() {

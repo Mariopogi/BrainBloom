@@ -34,7 +34,7 @@
         <TextView
             android:id="@+id/textPerformanceTitle"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="50dp"
             android:layout_marginStart="64dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="64dp"
@@ -247,8 +247,8 @@
 
             <Button
                 android:id="@+id/buttonNextBook"
-                android:layout_width="220dp"
-                android:layout_height="46dp"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
                 android:background="@drawable/bb_button_green"
                 android:backgroundTint="@null"
                 android:fontFamily="@font/arcade"
@@ -256,26 +256,6 @@
                 android:includeFontPadding="false"
                 android:stateListAnimator="@null"
                 android:text="NEXT BOOK"
-                android:textAllCaps="false"
-                android:textColor="@color/bb_white"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <Space
-                android:layout_width="20dp"
-                android:layout_height="1dp" />
-
-            <Button
-                android:id="@+id/buttonPlayAgain"
-                android:layout_width="220dp"
-                android:layout_height="46dp"
-                android:background="@drawable/bb_button_gray"
-                android:backgroundTint="@null"
-                android:fontFamily="@font/arcade"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:stateListAnimator="@null"
-                android:text="PLAY AGAIN"
                 android:textAllCaps="false"
                 android:textColor="@color/bb_white"
                 android:textSize="16sp"

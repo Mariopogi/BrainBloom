@@ -53,6 +53,7 @@
         <action android:id="@+id/action_quiz_to_gameOver" app:destination="@id/gameOverFragment" />
         <action android:id="@+id/action_quiz_to_mainMenu" app:destination="@id/mainMenuFragment" app:popUpTo="@id/mainMenuFragment" app:popUpToInclusive="false" />
         <action android:id="@+id/action_quiz_to_quiz" app:destination="@id/quizFragment" app:popUpTo="@id/quizFragment" app:popUpToInclusive="true" />
+        <action android:id="@+id/action_quiz_to_bookSelection" app:destination="@id/bookSelectionFragment" app:popUpTo="@id/bookSelectionFragment" app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -85,6 +86,7 @@
         android:label="Game Over">
         <action android:id="@+id/action_gameOver_to_quiz" app:destination="@id/quizFragment" />
         <action android:id="@+id/action_gameOver_to_mainMenu" app:destination="@id/mainMenuFragment" app:popUpTo="@id/mainMenuFragment" app:popUpToInclusive="false" />
+        <action android:id="@+id/action_gameOver_to_bookSelection" app:destination="@id/bookSelectionFragment" app:popUpTo="@id/bookSelectionFragment" app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

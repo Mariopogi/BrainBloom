@@ -52,6 +52,11 @@ public class BookSelectionFragment extends Fragment {
         view.findViewById(buttonId).setOnClickListener(v -> {
             SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
 
+            if (session.isBookCompleted(bookNumber)) {
+                showFinishedBookDialog(bookNumber);
+                return;
+            }
+
             if (!session.isBookUnlocked(bookNumber)) {
                 showLockedBookDialog();
                 return;
@@ -60,6 +65,22 @@ public class BookSelectionFragment extends Fragment {
             session.setSelectedBookNumber(bookNumber);
             NavHostFragment.findNavController(this).navigate(R.id.action_bookSelection_to_bookDetails);
         });
+    }
+
+    private void showFinishedBookDialog(int finishedBook) {
+        int nextBook = finishedBook + 1;
+        String message = "Book " + finishedBook + " is already finished.";
+        if (nextBook <= 4) {
+            message += " Please proceed to Book " + nextBook + ".";
+        }
+        
+        showCustomDialog(
+                "Book already finished!",
+                message,
+                "OK",
+                false,
+                null
+        );
     }
 
     private void updateBookImages(View view) {

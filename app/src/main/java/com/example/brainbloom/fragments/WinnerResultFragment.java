@@ -40,7 +40,6 @@ public class WinnerResultFragment extends Fragment {
         MusicManager.getInstance(requireContext()).playMusic(R.raw.bg_music_result_screen, true);
         SoundManager.getInstance(requireContext()).playSound(R.raw.winner_victory);
 
-        // --- Retrieve data from bundle or session fallback ---
         String player1Name;
         String player2Name;
         int player1Score;
@@ -78,8 +77,6 @@ public class WinnerResultFragment extends Fragment {
             winner       = session.getWinnerName().trim();
         }
 
-        // --- Winner title ---
-        // winner string is the actual player NAME (e.g. "Mario") or "Tie"
         String titleText;
         if ("Tie".equalsIgnoreCase(winner) || winner.isEmpty()) {
             titleText = "DRAW!!";
@@ -88,19 +85,17 @@ public class WinnerResultFragment extends Fragment {
         } else if (winner.equalsIgnoreCase(player2Name)) {
             titleText = "PLAYER 2 WINS!";
         } else {
-            // Fallback: just show the name
             titleText = winner.toUpperCase() + " WINS!";
         }
         ((TextView) view.findViewById(R.id.textWinnerTitle)).setText(titleText);
 
-        // --- Crown & Background logic ---
         ImageView crownP1 = view.findViewById(R.id.imageCrownP1);
         ImageView crownP2 = view.findViewById(R.id.imageCrownP2);
         View cardP1 = view.findViewById(R.id.cardPlayer1);
         View cardP2 = view.findViewById(R.id.cardPlayer2);
 
-        int colorWinner = 0xFFFFD700; // Gold/Yellow
-        int colorLoser = 0xFFF0EDD0;  // Cream/Beige
+        int colorWinner = 0xFFFFD700;
+        int colorLoser = 0xFFF0EDD0;
 
         if ("Tie".equalsIgnoreCase(winner) || winner.isEmpty()) {
             crownP1.setVisibility(View.INVISIBLE);
@@ -118,29 +113,24 @@ public class WinnerResultFragment extends Fragment {
             cardP1.setBackgroundColor(colorLoser);
             cardP2.setBackgroundColor(colorWinner);
         } else {
-            // Fallback
             crownP1.setVisibility(View.INVISIBLE);
             crownP2.setVisibility(View.INVISIBLE);
             cardP1.setBackgroundColor(colorLoser);
             cardP2.setBackgroundColor(colorLoser);
         }
 
-        // --- Player 1 card ---
         ((TextView) view.findViewById(R.id.textWinnerP1Name)).setText(player1Name);
         ((TextView) view.findViewById(R.id.textP1Score)).setText(String.valueOf(player1Score));
         ((TextView) view.findViewById(R.id.textP1Time)).setText(player1Time + "s");
         ((TextView) view.findViewById(R.id.textP1Combo)).setText(player1Combo + "x");
 
-        // --- Player 2 card ---
         ((TextView) view.findViewById(R.id.textWinnerP2Name)).setText(player2Name);
         ((TextView) view.findViewById(R.id.textP2Score)).setText(String.valueOf(player2Score));
         ((TextView) view.findViewById(R.id.textP2Time)).setText(player2Time + "s");
         ((TextView) view.findViewById(R.id.textP2Combo)).setText(player2Combo + "x");
 
-        // --- Save leaderboard records ---
-        saveCombinedTwoPlayerRecord(player1Name, player1Score, player2Name, player2Score, difficulty);
+        saveTwoPlayerLeaderboard(player1Name, player1Score, player2Name, player2Score, difficulty, winner);
 
-        // --- Hamburger dropdown ---
         LinearLayout hamburgerButton = view.findViewById(R.id.hamburgerButton);
         LinearLayout dropdownMenu = view.findViewById(R.id.dropdownMenu);
 
@@ -149,7 +139,6 @@ public class WinnerResultFragment extends Fragment {
             dropdownMenu.setVisibility(dropdownVisible ? View.VISIBLE : View.GONE);
         });
 
-        // Dismiss dropdown when tapping outside (tap on root)
         view.setOnClickListener(v -> {
             if (dropdownVisible) {
                 dropdownVisible = false;
@@ -168,23 +157,46 @@ public class WinnerResultFragment extends Fragment {
         });
     }
 
-    private void saveCombinedTwoPlayerRecord(String p1Name, int p1Score, String p2Name, int p2Score, String difficulty) {
-        String combinedNames = p1Name + " vs " + p2Name;
-        String combinedScores = p1Score + " - " + p2Score;
-        int topScore = Math.max(p1Score, p2Score);
+    private void saveTwoPlayerLeaderboard(String p1, int s1, String p2, int s2, String diff, String winner) {
+        String matchup = p1 + " vs " + p2;
+        String result = s1 + " - " + s2;
+        
+        // Final score for DB sort can be the winning score or max score
+        int topScore = Math.max(s1, s2);
 
         LeaderboardRecord record = new LeaderboardRecord(
                 0,
-                combinedNames,
+                matchup,
                 GameConstants.MODE_TWO_PLAYER,
                 0,
                 topScore,
                 0,
                 0,
-                difficulty,
-                combinedScores, // Using winnerName field to store the score string "X - Y"
-                DateTimeUtils.now()
+                diff,
+                winner, // winnerName field stores winner (e.g. "Mario" or "Tie")
+                result  // datePlayed field is a TEXT, we'll hijack it or better yet, winnerName is result?
+                // Let's use winnerName for winner name, and datePlayed for the actual date.
+                // We don't have a 'result string' field. 
+                // Let's use high combo or something? No.
+                // Re-hijacking: winnerName = winner, timeLeft = p1score, highestCombo = p2score?
+                // No, let's just stick to a consistent hijacking if we can't change model.
+                // Actually, let's use playerName = Matchup, winnerName = winner, finalScore = Result (wait finalScore is int).
+                // Okay, let's use: winnerName = winner, and we will format result string manually in adapter using finalScore if it was single value.
+                // But we need BOTH scores.
+                // Let's use: highestCombo = p1Score, timeLeft = p2Score.
         );
-        BrainBloomDatabaseHelper.getInstance(requireContext()).saveLeaderboardRecord(record);
+        
+        // Actually, the simplest is to store "P1 - P2" string in the record somehow.
+        // Let's use the 'difficulty' field to store "DIFF | P1-P2"? No.
+        // Let's just use the 'datePlayed' field for the result string for now if we must, 
+        // OR better: use 'winnerName' for "WINNER | RESULT".
+        
+        String winnerAndResult = winner + " (" + result + ")";
+        
+        LeaderboardRecord finalRecord = new LeaderboardRecord(
+            0, matchup, GameConstants.MODE_TWO_PLAYER, 0, topScore, 0, 0, diff, winnerAndResult, DateTimeUtils.now()
+        );
+
+        BrainBloomDatabaseHelper.getInstance(requireContext()).saveLeaderboardRecord(finalRecord);
     }
 }
