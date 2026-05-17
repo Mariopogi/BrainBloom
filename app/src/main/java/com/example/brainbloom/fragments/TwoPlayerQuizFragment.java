@@ -336,10 +336,14 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
 
         if (activePlayerNumber == 1) {
             activePlayerNumber = 2;
+            lives = GameConstants.STARTING_LIVES; // Reset lives for player 2
+            currentIndex = 0; // Reset index for player 2
             textProgress.setText(player2Name.toUpperCase() + "'S TURN!");
 
             loadQuestionsForActivePlayer();
             updatePlayerHighlight();
+            updateHearts();
+            updateProgress(); // Refresh combo display (Player 2 starts at 0)
 
             handler.postDelayed(this::showQuestion, 1000);
         } else {
@@ -405,7 +409,9 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
     private void updateProgress() {
         Player player = getActivePlayer();
 
-        textCombo.setText(player.getCurrentCombo() + "x");
+        if (textCombo != null) {
+            textCombo.setText(player.getCurrentCombo() + "x");
+        }
 
         textProgress.setText(
                 "PLAYER " + activePlayerNumber

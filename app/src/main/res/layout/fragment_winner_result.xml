@@ -21,94 +21,6 @@
         android:paddingEnd="28dp"
         android:paddingBottom="16dp">
 
-        <!-- HAMBURGER MENU — top left, anchored via RelativeLayout row -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <!-- Hamburger icon (≡) -->
-            <LinearLayout
-                android:id="@+id/hamburgerButton"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:layout_alignParentStart="true">
-
-                <View
-                    android:layout_width="26dp"
-                    android:layout_height="3dp"
-                    android:background="#FFFFFF"
-                    android:layout_marginBottom="5dp" />
-
-                <View
-                    android:layout_width="26dp"
-                    android:layout_height="3dp"
-                    android:background="#FFFFFF"
-                    android:layout_marginBottom="5dp" />
-
-                <View
-                    android:layout_width="26dp"
-                    android:layout_height="3dp"
-                    android:background="#FFFFFF" />
-
-            </LinearLayout>
-
-            <!-- Dropdown menu (hidden by default) -->
-            <LinearLayout
-                android:id="@+id/dropdownMenu"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/hamburgerButton"
-                android:background="#FFFFFFFF"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:elevation="8dp">
-
-                <TextView
-                    android:id="@+id/buttonWinnerPlayAgain"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="sans-serif"
-                    android:gravity="center_vertical"
-                    android:includeFontPadding="false"
-                    android:paddingStart="20dp"
-                    android:text="Play Again"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#DDDDDD" />
-
-                <TextView
-                    android:id="@+id/buttonWinnerMainMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="sans-serif"
-                    android:gravity="center_vertical"
-                    android:includeFontPadding="false"
-                    android:paddingStart="20dp"
-                    android:text="Main Menu"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
         <!-- STAR BADGE -->
         <ImageView
             android:layout_width="72dp"
@@ -144,13 +56,14 @@
         <LinearLayout
             android:id="@+id/cardPlayer1"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="0dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:background="#FFD700"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="16dp">
+
 
             <!-- Crown icon left -->
             <ImageView
@@ -314,7 +227,7 @@
         <LinearLayout
             android:id="@+id/cardPlayer2"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:background="#F0EDD0"
@@ -500,6 +413,88 @@
             android:layout_width="1dp"
             android:layout_height="1dp"
             android:visibility="gone" />
+
+    </LinearLayout>
+
+    <!-- HAMBURGER MENU — top left, absolute positioning -->
+    <LinearLayout
+        android:id="@+id/hamburgerButton"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless">
+
+        <View
+            android:layout_width="26dp"
+            android:layout_height="3dp"
+            android:background="#FFFFFF"
+            android:layout_marginBottom="5dp" />
+
+        <View
+            android:layout_width="26dp"
+            android:layout_height="3dp"
+            android:background="#FFFFFF"
+            android:layout_marginBottom="5dp" />
+
+        <View
+            android:layout_width="26dp"
+            android:layout_height="3dp"
+            android:background="#FFFFFF" />
+
+    </LinearLayout>
+
+    <!-- Dropdown menu (hidden by default) -->
+    <LinearLayout
+        android:id="@+id/dropdownMenu"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="60dp"
+        android:background="#FFFFFFFF"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:elevation="8dp">
+
+        <TextView
+            android:id="@+id/buttonWinnerPlayAgain"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:paddingStart="20dp"
+            android:text="Play Again"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DDDDDD" />
+
+        <TextView
+            android:id="@+id/buttonWinnerMainMenu"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:paddingStart="20dp"
+            android:text="Main Menu"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
