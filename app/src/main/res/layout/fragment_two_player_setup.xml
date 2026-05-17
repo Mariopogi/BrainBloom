@@ -17,9 +17,9 @@
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingStart="24dp"
-        android:paddingTop="20dp"
+        android:paddingTop="16dp"
         android:paddingEnd="24dp"
-        android:paddingBottom="28dp">
+        android:paddingBottom="16dp">
 
         <!-- TITLE -->
         <TextView
@@ -35,12 +35,12 @@
             android:shadowRadius="1"
             android:text="2 PLAYER MODE"
             android:textColor="@color/bb_yellow"
-            android:textSize="32sp" />
+            android:textSize="26sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5" />
+            android:layout_weight="0.4" />
 
         <!-- PLAYER CARDS ROW -->
         <LinearLayout
@@ -54,12 +54,12 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="6dp"
                 android:layout_weight="1"
                 android:background="@color/bb_blue"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="14dp">
+                android:padding="10dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -76,14 +76,14 @@
                         android:includeFontPadding="false"
                         android:text="PLAYER 1"
                         android:textColor="#FFD700"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/editPlayerOneName"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_height="36dp"
+                        android:layout_marginTop="6dp"
                         android:background="#AA000000"
                         android:fontFamily="@font/arcade"
                         android:gravity="center"
@@ -96,13 +96,14 @@
                         android:singleLine="true"
                         android:textColor="#FFFFFF"
                         android:textColorHint="#AAAAAA"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
                     android:src="@drawable/ic_player" />
 
             </LinearLayout>
@@ -111,12 +112,12 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="6dp"
                 android:layout_weight="1"
                 android:background="@color/bb_red"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="14dp">
+                android:padding="10dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -133,14 +134,14 @@
                         android:includeFontPadding="false"
                         android:text="PLAYER 2"
                         android:textColor="#FFD700"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/editPlayerTwoName"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_height="36dp"
+                        android:layout_marginTop="6dp"
                         android:background="#AA000000"
                         android:fontFamily="@font/arcade"
                         android:gravity="center"
@@ -153,13 +154,14 @@
                         android:singleLine="true"
                         android:textColor="#FFFFFF"
                         android:textColorHint="#AAAAAA"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
                     android:src="@drawable/ic_player" />
 
             </LinearLayout>
@@ -169,7 +171,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5" />
+            android:layout_weight="0.3" />
 
         <!-- DIFFICULTY PANEL -->
         <LinearLayout
@@ -179,7 +181,7 @@
             android:gravity="center"
             android:maxWidth="500dp"
             android:orientation="vertical"
-            android:padding="12dp">
+            android:padding="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -189,14 +191,14 @@
                 android:includeFontPadding="false"
                 android:text="DIFFICULTY"
                 android:textColor="@color/bb_white"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <RadioGroup
                 android:id="@+id/radioDifficulty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -208,10 +210,10 @@
                     android:checked="true"
                     android:fontFamily="@font/arcade"
                     android:paddingStart="4dp"
-                    android:paddingEnd="16dp"
+                    android:paddingEnd="12dp"
                     android:text="Easy"
                     android:textColor="@color/bb_white"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
                 <RadioButton
                     android:id="@+id/radioMedium"
@@ -220,10 +222,10 @@
                     android:buttonTint="@color/bb_white"
                     android:fontFamily="@font/arcade"
                     android:paddingStart="4dp"
-                    android:paddingEnd="16dp"
+                    android:paddingEnd="12dp"
                     android:text="Medium"
                     android:textColor="@color/bb_white"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
                 <RadioButton
                     android:id="@+id/radioHard"
@@ -234,7 +236,7 @@
                     android:paddingStart="4dp"
                     android:text="Hard"
                     android:textColor="@color/bb_white"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
             </RadioGroup>
 
@@ -243,13 +245,13 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="0.4" />
 
         <!-- START MATCH -->
         <Button
             android:id="@+id/buttonStartTwoPlayerMatch"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_width="400dp"
+            android:layout_height="44dp"
             android:background="@drawable/bb_button_purple"
             android:fontFamily="@font/arcade"
             android:includeFontPadding="false"
@@ -260,15 +262,15 @@
             android:text="START MATCH"
             android:textAllCaps="false"
             android:textColor="@color/bb_white"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <!-- MAIN MENU -->
         <Button
             android:id="@+id/buttonTwoPlayerBack"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="400dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/bb_panel_dark"
             android:fontFamily="@font/arcade"
             android:includeFontPadding="false"
@@ -279,7 +281,7 @@
             android:text="MAIN MENU"
             android:textAllCaps="false"
             android:textColor="@color/bb_white"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
     </LinearLayout>
