@@ -17,8 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BrainBloomDatabaseHelper extends SQLiteOpenHelper {
+
     private static final String DATABASE_NAME = "brainbloom_game.db";
-    private static final int DATABASE_VERSION = 1;
+
+    private static final int DATABASE_VERSION = 2;
 
     private static BrainBloomDatabaseHelper instance;
     private final Context appContext;
@@ -44,9 +46,14 @@ public class BrainBloomDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS leaderboard");
+        /*
+         * Do not delete the leaderboard here.
+         * Only refresh the question bank so your updated brainbloom_seed.sql is loaded.
+         */
         db.execSQL("DROP TABLE IF EXISTS questions");
-        onCreate(db);
+        createQuestionTable(db);
+        createLeaderboardTable(db);
+        executeSeedFile(db);
     }
 
     private void createQuestionTable(SQLiteDatabase db) {
@@ -80,24 +87,23 @@ public class BrainBloomDatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void executeSeedFile(SQLiteDatabase db) {
-        if (getQuestionCount(db) > 0) {
-            return;
-        }
-
         db.beginTransaction();
+
         try {
             InputStream inputStream = appContext.getResources().openRawResource(R.raw.brainbloom_seed);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
             String line;
             StringBuilder statement = new StringBuilder();
 
             while ((line = reader.readLine()) != null) {
                 String trimmed = line.trim();
+
                 if (trimmed.isEmpty() || trimmed.startsWith("--")) {
                     continue;
                 }
 
-                statement.append(trimmed);
+                statement.append(trimmed).append(" ");
 
                 if (trimmed.endsWith(";")) {
                     db.execSQL(statement.toString());
@@ -107,21 +113,13 @@ public class BrainBloomDatabaseHelper extends SQLiteOpenHelper {
 
             reader.close();
             db.setTransactionSuccessful();
+
         } catch (Exception error) {
             throw new RuntimeException("Failed to seed Brain Bloom questions.", error);
+
         } finally {
             db.endTransaction();
         }
-    }
-
-    private int getQuestionCount(SQLiteDatabase db) {
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM questions", null);
-        int count = 0;
-        if (cursor.moveToFirst()) {
-            count = cursor.getInt(0);
-        }
-        cursor.close();
-        return count;
     }
 
     public List<Question> getRandomQuestions(int bookNumber, String difficulty, int limit) {
@@ -147,6 +145,7 @@ public class BrainBloomDatabaseHelper extends SQLiteOpenHelper {
                     cursor.getString(8),
                     cursor.getString(9)
             );
+
             questions.add(question);
         }
 
@@ -156,6 +155,7 @@ public class BrainBloomDatabaseHelper extends SQLiteOpenHelper {
 
     public void saveLeaderboardRecord(LeaderboardRecord record) {
         SQLiteDatabase db = getWritableDatabase();
+
         ContentValues values = new ContentValues();
         values.put("player_name", record.getPlayerName());
         values.put("game_mode", record.getGameMode());
@@ -181,7 +181,7 @@ public class BrainBloomDatabaseHelper extends SQLiteOpenHelper {
         );
 
         while (cursor.moveToNext()) {
-            records.add(new LeaderboardRecord(
+            LeaderboardRecord record = new LeaderboardRecord(
                     cursor.getInt(0),
                     cursor.getString(1),
                     cursor.getString(2),
@@ -192,7 +192,9 @@ public class BrainBloomDatabaseHelper extends SQLiteOpenHelper {
                     cursor.getString(7),
                     cursor.getString(8),
                     cursor.getString(9)
-            ));
+            );
+
+            records.add(record);
         }
 
         cursor.close();

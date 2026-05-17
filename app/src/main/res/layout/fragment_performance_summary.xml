@@ -34,9 +34,9 @@
         <TextView
             android:id="@+id/textPerformanceTitle"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="42dp"
             android:layout_marginStart="64dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="64dp"
             android:background="@drawable/bb_top_strip"
             android:fontFamily="@font/arcade"
@@ -44,10 +44,10 @@
             android:includeFontPadding="false"
             android:text="BOOK COMPLETED!"
             android:textColor="@color/bb_white"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            app:autoSizeMaxTextSize="22sp"
-            app:autoSizeMinTextSize="13sp"
+            app:autoSizeMaxTextSize="20sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeTextType="uniform"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,17 +56,17 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/performanceCard"
             android:layout_width="0dp"
-            android:layout_height="180dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="40dp"
+            android:layout_height="165dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="60dp"
             android:background="@drawable/bb_card_light"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:paddingStart="34dp"
-            android:paddingTop="18dp"
+            android:paddingTop="14dp"
             android:paddingEnd="34dp"
-            android:paddingBottom="18dp"
+            android:paddingBottom="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textPerformanceTitle">
@@ -74,43 +74,141 @@
             <TextView
                 android:id="@+id/textPerformanceSummaryTitle"
                 android:layout_width="0dp"
-                android:layout_height="32dp"
+                android:layout_height="28dp"
                 android:fontFamily="@font/arcade"
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:text="PERFORMANCE SUMMARY"
                 android:textColor="@color/bb_black"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMaxTextSize="18sp"
                 app:autoSizeMinTextSize="12sp"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!-- Row 1: Time Left -->
             <TextView
-                android:id="@+id/textPerformanceStats"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="24dp"
+                android:id="@+id/textTimeLeftLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/arcade"
-                android:gravity="center_vertical"
                 android:includeFontPadding="false"
-                android:lineSpacingExtra="5dp"
-                android:text="TIME LEFT: 10s&#10;FLOWERS BLOOMED: 7&#10;SCORE: 700"
+                android:text="TIME LEFT:"
                 android:textColor="@color/bb_black"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                app:autoSizeMaxTextSize="18sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/imagePerformancePanel"
+                app:layout_constraintBottom_toTopOf="@id/textCorrectLabel"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textPerformanceSummaryTitle" />
+                app:layout_constraintTop_toBottomOf="@id/textPerformanceSummaryTitle"
+                app:layout_constraintVertical_chainStyle="spread" />
+
+            <TextView
+                android:id="@+id/textTimeLeftValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/arcade"
+                android:includeFontPadding="false"
+                android:text="211s"
+                android:textColor="@color/bb_black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/textTimeLeftLabel"
+                app:layout_constraintStart_toEndOf="@id/textTimeLeftLabel"
+                app:layout_constraintTop_toTopOf="@id/textTimeLeftLabel" />
+
+            <!-- Row 2: Correct Answers -->
+            <TextView
+                android:id="@+id/textCorrectLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arcade"
+                android:includeFontPadding="false"
+                android:text="CORRECT ANSWERS:"
+                android:textColor="@color/bb_black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/textComboLabel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textTimeLeftLabel" />
+
+            <TextView
+                android:id="@+id/textCorrectValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/arcade"
+                android:includeFontPadding="false"
+                android:text="8"
+                android:textColor="@color/bb_black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/textCorrectLabel"
+                app:layout_constraintStart_toEndOf="@id/textCorrectLabel"
+                app:layout_constraintTop_toTopOf="@id/textCorrectLabel" />
+
+            <!-- Row 3: Highest Combo -->
+            <TextView
+                android:id="@+id/textComboLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arcade"
+                android:includeFontPadding="false"
+                android:text="HIGHEST COMBO:"
+                android:textColor="@color/bb_black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/textScoreLabel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textCorrectLabel" />
+
+            <TextView
+                android:id="@+id/textComboValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/arcade"
+                android:includeFontPadding="false"
+                android:text="4x"
+                android:textColor="@color/bb_black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/textComboLabel"
+                app:layout_constraintStart_toEndOf="@id/textComboLabel"
+                app:layout_constraintTop_toTopOf="@id/textComboLabel" />
+
+            <!-- Row 4: Score -->
+            <TextView
+                android:id="@+id/textScoreLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arcade"
+                android:includeFontPadding="false"
+                android:text="SCORE:"
+                android:textColor="@color/bb_black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textComboLabel" />
+
+            <TextView
+                android:id="@+id/textScoreValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/arcade"
+                android:includeFontPadding="false"
+                android:text="1065"
+                android:textColor="@color/bb_black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/textScoreLabel"
+                app:layout_constraintStart_toEndOf="@id/textScoreLabel"
+                app:layout_constraintTop_toTopOf="@id/textScoreLabel" />
 
             <FrameLayout
                 android:id="@+id/imagePerformancePanel"
@@ -118,11 +216,11 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bb_panel_light_rect"
-                android:padding="10dp"
+                android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textPerformanceSummaryTitle"
-                app:layout_constraintWidth_percent="0.35">
+                app:layout_constraintWidth_percent="0.32">
 
                 <ImageView
                     android:id="@+id/imagePerformanceObject"
@@ -139,8 +237,8 @@
         <LinearLayout
             android:id="@+id/performanceButtonRow"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="32dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"

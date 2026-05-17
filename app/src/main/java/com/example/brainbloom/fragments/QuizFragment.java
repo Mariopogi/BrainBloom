@@ -137,7 +137,8 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
         Book book = BookRepository.getBook(session.getSelectedBookNumber());
         Question question = questions.get(currentIndex);
 
-        textQuizBook.setText("BOOK " + book.getBookNumber() + ":\n" + book.getArea());
+        textQuizBook.setText("PLAYER: " + session.getSinglePlayerName().toUpperCase() + "\n" +
+                "BOOK " + book.getBookNumber() + ": " + book.getArea());
         textQuestionNumber.setText("QUESTION " + (currentIndex + 1) + " OUT " + questions.size());
         textQuestion.setText(question.getQuestionText());
 
@@ -176,7 +177,7 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
             @Override
             public void onFinish() {
                 timeLeft = 0;
-                answerWrong();
+                answerWrong(true);
             }
         };
 
@@ -196,7 +197,7 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
         if (question.isCorrect(selectedAnswer)) {
             answerCorrect();
         } else {
-            answerWrong();
+            answerWrong(false);
         }
     }
 
@@ -228,7 +229,7 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
         });
     }
 
-    private void answerWrong() {
+    private void answerWrong(boolean isTimeUp) {
         if (feedbackShowing || quizFinished) {
             return;
         }
@@ -246,15 +247,17 @@ public class QuizFragment extends Fragment implements PauseDialogFragment.PauseA
         updateHearts();
         updateProgress();
 
+        int popupLayout = isTimeUp ? R.layout.popup_times_up : R.layout.popup_wrong_answer;
+
         if (lives <= 0) {
             session.setLastAttemptScore(score);
 
-            showFeedbackPopup(R.layout.popup_wrong_answer, () -> {
+            showFeedbackPopup(popupLayout, () -> {
                 quizFinished = true;
                 NavHostFragment.findNavController(this).navigate(R.id.action_quiz_to_gameOver);
             });
         } else {
-            showFeedbackPopup(R.layout.popup_wrong_answer, () -> {
+            showFeedbackPopup(popupLayout, () -> {
                 currentIndex++;
                 showQuestion();
             });

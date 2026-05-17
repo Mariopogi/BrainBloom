@@ -40,7 +40,7 @@ public class MainMenuFragment extends Fragment {
         view.findViewById(R.id.buttonStartAdventure).setOnClickListener(v -> {
             SoundManager.getInstance(requireContext()).playSound(R.raw.button_click);
             GameSession.getInstance().resetAdventure();
-            NavHostFragment.findNavController(this).navigate(R.id.action_mainMenu_to_story);
+            NavHostFragment.findNavController(this).navigate(R.id.action_mainMenu_to_enterName);
         });
 
         view.findViewById(R.id.buttonTwoPlayer).setOnClickListener(v -> {

@@ -47,7 +47,6 @@ public class PerformanceSummaryFragment extends Fragment {
 
         FrameLayout root = view.findViewById(R.id.performanceRoot);
         TextView textPerformanceTitle = view.findViewById(R.id.textPerformanceTitle);
-        TextView textPerformanceStats = view.findViewById(R.id.textPerformanceStats);
         TextView buttonNextBook = view.findViewById(R.id.buttonNextBook);
         ImageView imagePerformanceObject = view.findViewById(R.id.imagePerformanceObject);
 
@@ -56,12 +55,10 @@ public class PerformanceSummaryFragment extends Fragment {
         imagePerformanceObject.setImageResource(book.getObjectDrawableRes());
 
         if (result != null) {
-            textPerformanceStats.setText(
-                    "TIME LEFT: " + result.getTimeLeft() + "s\n" +
-                            "CORRECT ANSWERS: " + result.getCorrectCount() + "\n" +
-                            "HIGHEST COMBO: " + result.getHighestCombo() + "x\n" +
-                            "SCORE: " + result.getScore()
-            );
+            ((TextView) view.findViewById(R.id.textTimeLeftValue)).setText(result.getTimeLeft() + "s");
+            ((TextView) view.findViewById(R.id.textCorrectValue)).setText(String.valueOf(result.getCorrectCount()));
+            ((TextView) view.findViewById(R.id.textComboValue)).setText(result.getHighestCombo() + "x");
+            ((TextView) view.findViewById(R.id.textScoreValue)).setText(String.valueOf(result.getScore()));
         }
 
         if (book.getBookNumber() == 4) {

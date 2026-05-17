@@ -8,10 +8,17 @@
         android:id="@+id/mainMenuFragment"
         android:name="com.example.brainbloom.fragments.MainMenuFragment"
         android:label="Main Menu">
-        <action android:id="@+id/action_mainMenu_to_story" app:destination="@id/storyFragment" />
+        <action android:id="@+id/action_mainMenu_to_enterName" app:destination="@id/enterNameFragment" />
         <action android:id="@+id/action_mainMenu_to_twoPlayerSetup" app:destination="@id/twoPlayerSetupFragment" />
         <action android:id="@+id/action_mainMenu_to_leaderboard" app:destination="@id/leaderboardFragment" />
         <action android:id="@+id/action_mainMenu_to_settings" app:destination="@id/settingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/enterNameFragment"
+        android:name="com.example.brainbloom.fragments.EnterNameFragment"
+        android:label="Enter Name">
+        <action android:id="@+id/action_enterName_to_story" app:destination="@id/storyFragment" />
     </fragment>
 
     <fragment

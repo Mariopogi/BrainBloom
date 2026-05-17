@@ -207,7 +207,7 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
             @Override
             public void onFinish() {
                 timeLeft = 0;
-                answerWrong();
+                answerWrong(true);
             }
         };
 
@@ -228,7 +228,7 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
         if (question.isCorrect(selectedAnswer)) {
             answerCorrect();
         } else {
-            answerWrong();
+            answerWrong(false);
         }
     }
 
@@ -257,7 +257,7 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
         });
     }
 
-    private void answerWrong() {
+    private void answerWrong(boolean isTimeUp) {
         if (feedbackShowing || quizFinished) {
             return;
         }
@@ -275,10 +275,12 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
         updateHearts();
         updateProgress();
 
+        int popupLayout = isTimeUp ? R.layout.popup_times_up : R.layout.popup_wrong_answer;
+
         if (lives <= 0) {
-            showFeedbackPopup(R.layout.popup_wrong_answer, this::finishActivePlayerTurn);
+            showFeedbackPopup(popupLayout, this::finishActivePlayerTurn);
         } else {
-            showFeedbackPopup(R.layout.popup_wrong_answer, () -> {
+            showFeedbackPopup(popupLayout, () -> {
                 currentIndex++;
                 showQuestion();
             });
