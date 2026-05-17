@@ -39,6 +39,7 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
     private int currentIndex = 0;
     private int activePlayerNumber = 1;
     private int timeLeft = GameConstants.QUESTION_TIME_SECONDS;
+    private int lives = GameConstants.STARTING_LIVES;
     private CountDownTimer timer;
     private boolean acceptingAnswers = true;
 
@@ -56,6 +57,7 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
     private TextView textPlayer2Name;
     private TextView textPlayer1Score;
     private TextView textPlayer2Score;
+    private ImageView imageHearts;
     private Button buttonA;
     private Button buttonB;
     private Button buttonC;
@@ -89,6 +91,7 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
         view.findViewById(R.id.buttonPauseQuiz).setOnClickListener(v -> pauseQuiz());
 
         loadQuestionsForActivePlayer();
+        updatePlayerHighlight();
         showQuestion();
     }
 
@@ -103,6 +106,7 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
         textPlayer2Name = view.findViewById(R.id.textPlayer2Name);
         textPlayer1Score = view.findViewById(R.id.textPlayer1Score);
         textPlayer2Score = view.findViewById(R.id.textPlayer2Score);
+        imageHearts = view.findViewById(R.id.imageHearts);
         buttonA = view.findViewById(R.id.buttonChoiceA);
         buttonB = view.findViewById(R.id.buttonChoiceB);
         buttonC = view.findViewById(R.id.buttonChoiceC);
@@ -114,11 +118,9 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
     }
 
     private void loadQuestionsForActivePlayer() {
-        // Use book 1 questions for two-player mode with selected difficulty
+        lives = GameConstants.STARTING_LIVES;
         questions = BrainBloomDatabaseHelper.getInstance(requireContext())
                 .getRandomQuestions(1, difficulty, GameConstants.QUESTION_COUNT_PER_BOOK);
-
-        // Fallback: try any book if book 1 returns nothing
         if (questions.isEmpty()) {
             for (int book = 2; book <= 4; book++) {
                 questions = BrainBloomDatabaseHelper.getInstance(requireContext())
@@ -126,8 +128,8 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
                 if (!questions.isEmpty()) break;
             }
         }
-
         currentIndex = 0;
+        updateHearts();
     }
 
     private void showQuestion() {
@@ -139,7 +141,6 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
         acceptingAnswers = true;
         setAnswerButtonsEnabled(true);
 
-        Player player = getActivePlayer();
         Question question = questions.get(currentIndex);
 
         textQuestionNumber.setText("QUESTION " + (currentIndex + 1) + " OUT " + questions.size());
@@ -196,15 +197,13 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
 
     private void answerCorrect() {
         SoundManager.getInstance(requireContext()).playSound(R.raw.correct_answer);
-
         Player player = getActivePlayer();
         player.addCorrectCombo();
         player.addTimeLeft(timeLeft);
-
         int points = scoreCalculator.calculateCorrectAnswerScore(timeLeft, player.getCurrentCombo());
         player.addScore(points);
-
         updateScoreDisplays();
+        updateProgress();
         Toast.makeText(requireContext(), "Correct! +" + points, Toast.LENGTH_SHORT).show();
         nextQuestionDelayed();
     }
@@ -212,12 +211,20 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
     private void answerWrong() {
         SoundManager.getInstance(requireContext()).playSound(R.raw.wrong_answer);
         getActivePlayer().resetCombo();
+        lives--;
+        updateHearts();
+        updateProgress();
         Toast.makeText(requireContext(), "Wrong!", Toast.LENGTH_SHORT).show();
-        nextQuestionDelayed();
+
+        if (lives <= 0) {
+            // Player used all lives — end their turn
+            handler.postDelayed(() -> finishActivePlayerTurn(), 800);
+        } else {
+            nextQuestionDelayed();
+        }
     }
 
     private void nextQuestionDelayed() {
-        updateProgress();
         handler.postDelayed(() -> {
             currentIndex++;
             showQuestion();
@@ -231,6 +238,7 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
             Toast.makeText(requireContext(), player2Name + "'s turn!", Toast.LENGTH_LONG).show();
             activePlayerNumber = 2;
             loadQuestionsForActivePlayer();
+            updatePlayerHighlight();
             handler.postDelayed(this::showQuestion, 1200);
         } else {
             session.computeWinner();
@@ -254,11 +262,42 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
         }
     }
 
+    private void updateHearts() {
+        if (lives >= 3) {
+            imageHearts.setImageResource(R.drawable.ic_3_hp);
+        } else if (lives == 2) {
+            imageHearts.setImageResource(R.drawable.ic_2_hp);
+        } else if (lives == 1) {
+            imageHearts.setImageResource(R.drawable.ic_1_hp);
+        } else {
+            imageHearts.setImageResource(R.drawable.ic_no_hp);
+        }
+    }
+
+    /**
+     * Visually highlight the active player's card (brighter) vs the waiting player (dimmed).
+     * We do this by toggling alpha on the player card containers.
+     */
+    private void updatePlayerHighlight() {
+        if (getView() == null) return;
+        // Player panels are inside the LinearLayout with id playerPanelColumn
+        // Child 0 = Player 1 card, Child 1 = Player 2 card
+        ViewGroup col = getView().findViewById(R.id.playerPanelColumn);
+        if (col == null || col.getChildCount() < 2) return;
+        View p1card = col.getChildAt(0);
+        View p2card = col.getChildAt(1);
+        if (activePlayerNumber == 1) {
+            p1card.setAlpha(1.0f);
+            p2card.setAlpha(0.45f);
+        } else {
+            p1card.setAlpha(0.45f);
+            p2card.setAlpha(1.0f);
+        }
+    }
+
     private void updateProgress() {
         Player player = getActivePlayer();
-        String playerLabel = activePlayerNumber == 1 ? player1Name : player2Name;
-        textCombo.setText("COMBO\n" + player.getCurrentCombo() + "x");
-        textProgress.setText(playerLabel.toUpperCase() + "'S TURN   Q" + (currentIndex + 1) + "/" + questions.size());
+        textCombo.setText(player.getCurrentCombo() + "x");
     }
 
     private void updateScoreDisplays() {
@@ -291,6 +330,7 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
         textPlayer1Score.setText("0");
         textPlayer2Score.setText("0");
         loadQuestionsForActivePlayer();
+        updatePlayerHighlight();
         showQuestion();
     }
 

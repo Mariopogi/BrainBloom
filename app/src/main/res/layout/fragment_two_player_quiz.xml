@@ -11,27 +11,32 @@
         android:layout_height="match_parent"
         android:padding="@dimen/screen_padding">
 
+        <!-- Vertical guideline splitting left player panel (~35%) from right question area -->
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideLeftPanelEnd"
+            android:id="@+id/guideVertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.36" />
+            app:layout_constraintGuide_percent="0.34" />
 
-        <!-- TOP HUD BAR -->
+        <!-- ═══════════════════════════════════════════════════
+             TOP HUD BAR
+             DIFFICULTY: EASY  | ❤❤❤ | [30s] [COMBO 1x] [⏸]
+             ═══════════════════════════════════════════════════ -->
         <LinearLayout
             android:id="@+id/twoPlayerTopHud"
             android:layout_width="0dp"
-            android:layout_height="58dp"
+            android:layout_height="60dp"
             android:background="@drawable/bb_panel_dark"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingEnd="12dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <!-- "DIFFICULTY: EASY" -->
             <TextView
                 android:id="@+id/textQuizBook"
                 android:layout_width="0dp"
@@ -43,58 +48,94 @@
                 android:maxLines="2"
                 android:text="DIFFICULTY: EASY"
                 android:textColor="@color/bb_white"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:textStyle="bold"
-                app:autoSizeMaxTextSize="16sp"
-                app:autoSizeMinTextSize="9sp"
+                app:autoSizeMaxTextSize="14sp"
+                app:autoSizeMinTextSize="8sp"
                 app:autoSizeTextType="uniform" />
 
+            <!-- Hearts (3 hearts image, shows current player's HP) -->
             <ImageView
                 android:id="@+id/imageHearts"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="8dp"
+                android:layout_width="90dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="6dp"
                 android:contentDescription="Hearts"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_3_hp"
-                android:visibility="gone" />
+                android:src="@drawable/ic_3_hp" />
 
-            <TextView
-                android:id="@+id/textTimer"
-                android:layout_width="60dp"
-                android:layout_height="42dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/bb_button_blue"
-                android:fontFamily="@font/arcade"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="30s"
-                android:textColor="@color/bb_white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:autoSizeMaxTextSize="16sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeTextType="uniform" />
-
-            <TextView
-                android:id="@+id/textCombo"
-                android:layout_width="60dp"
-                android:layout_height="42dp"
+            <!-- Timer -->
+            <LinearLayout
+                android:layout_width="54dp"
+                android:layout_height="44dp"
                 android:layout_marginStart="6dp"
                 android:background="@drawable/bb_button_blue"
-                android:fontFamily="@font/arcade"
                 android:gravity="center"
-                android:includeFontPadding="false"
-                android:maxLines="2"
-                android:text="COMBO&#10;0x"
-                android:textColor="@color/bb_white"
-                android:textSize="10sp" />
+                android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arcade"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="⏱"
+                    android:textColor="@color/bb_white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arcade"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="30s"
+                    android:textColor="@color/bb_white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- Combo -->
+            <LinearLayout
+                android:layout_width="54dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bb_button_blue"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arcade"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="COMBO"
+                    android:textColor="@color/bb_white"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:id="@+id/textCombo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arcade"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="1x"
+                    android:textColor="@color/bb_white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- Pause button -->
             <ImageButton
                 android:id="@+id/buttonPauseQuiz"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_marginStart="8dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="6dp"
                 android:background="@drawable/bb_panel_dark"
                 android:contentDescription="Pause"
                 android:padding="8dp"
@@ -103,39 +144,47 @@
 
         </LinearLayout>
 
-        <!-- LEFT PANEL: player cards stacked -->
+        <!-- ═══════════════════════════════════════════════════
+             LEFT PANEL: Player 1 (top) + Player 2 (bottom)
+             ═══════════════════════════════════════════════════ -->
         <LinearLayout
             android:id="@+id/playerPanelColumn"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="6dp"
             android:orientation="vertical"
             android:weightSum="2"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/guideLeftPanelEnd"
+            app:layout_constraintEnd_toStartOf="@id/guideVertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/twoPlayerTopHud">
 
-            <!-- PLAYER 1 CARD -->
+            <!-- PLAYER 1 CARD — BLUE -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_marginBottom="6dp"
-                android:background="@drawable/bb_panel_dark"
+                android:layout_weight="1"
+                android:background="#DD1A3A8A"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="8dp">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:contentDescription="Player 1"
-                    android:scaleType="fitCenter"
-                    android:background="@drawable/bb_card_light"
-                    android:padding="4dp"
-                    android:src="@drawable/ic_crown_player_win" />
+                <!-- Person icon white box -->
+                <LinearLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="#FFFFFFFF"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="👤"
+                        android:textSize="24sp" />
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -145,75 +194,94 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="PLAYER 1"
-                    android:textColor="@color/bb_yellow"
-                    android:textSize="10sp" />
+                    android:textColor="#FFD700"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
 
+                <!-- Name pill -->
                 <TextView
                     android:id="@+id/textPlayer1Name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bb_card_light"
+                    android:layout_marginTop="3dp"
+                    android:background="#AA000000"
                     android:fontFamily="@font/arcade"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:padding="2dp"
+                    android:padding="3dp"
                     android:text="Player 1"
-                    android:textColor="@color/bb_black"
+                    android:textColor="#FFFFFF"
                     android:textSize="11sp"
                     app:autoSizeMaxTextSize="12sp"
                     app:autoSizeMinTextSize="8sp"
                     app:autoSizeTextType="uniform" />
 
+                <!-- Score label -->
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:fontFamily="@font/arcade"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="SCORE"
-                    android:textColor="@color/bb_white"
+                    android:textColor="#FFFFFF"
                     android:textSize="10sp" />
 
-                <TextView
-                    android:id="@+id/textPlayer1Score"
+                <!-- Score value box -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:background="@drawable/bb_card_light"
-                    android:fontFamily="@font/arcade"
                     android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="0"
-                    android:textColor="#FF8847"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:autoSizeMaxTextSize="22sp"
-                    app:autoSizeMinTextSize="12sp"
-                    app:autoSizeTextType="uniform" />
+                    android:layout_marginTop="3dp">
+
+                    <TextView
+                        android:id="@+id/textPlayer1Score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/arcade"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="0"
+                        android:textColor="#FF8847"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:autoSizeMaxTextSize="22sp"
+                        app:autoSizeMinTextSize="12sp"
+                        app:autoSizeTextType="uniform" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <!-- PLAYER 2 CARD -->
+            <!-- PLAYER 2 CARD — RED (dimmed when not active) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@drawable/bb_panel_dark"
+                android:background="#DD8B1A1A"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="8dp">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:contentDescription="Player 2"
-                    android:scaleType="fitCenter"
-                    android:background="@drawable/bb_card_light"
-                    android:padding="4dp"
-                    android:src="@drawable/ic_crown_player_win"
-                    android:alpha="0.4" />
+                <!-- Person icon white box -->
+                <LinearLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="#66FFFFFF"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="👤"
+                        android:textSize="24sp"
+                        android:alpha="0.5" />
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -223,65 +291,82 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="PLAYER 2"
-                    android:textColor="@color/bb_yellow"
-                    android:textSize="10sp" />
+                    android:textColor="#FFAAAA"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
 
+                <!-- Name pill -->
                 <TextView
                     android:id="@+id/textPlayer2Name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bb_card_light"
+                    android:layout_marginTop="3dp"
+                    android:background="#66000000"
                     android:fontFamily="@font/arcade"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:padding="2dp"
+                    android:padding="3dp"
                     android:text="Player 2"
-                    android:textColor="@color/bb_black"
+                    android:textColor="#AAAAAA"
                     android:textSize="11sp"
                     app:autoSizeMaxTextSize="12sp"
                     app:autoSizeMinTextSize="8sp"
                     app:autoSizeTextType="uniform" />
 
+                <!-- Score label -->
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:fontFamily="@font/arcade"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="SCORE"
-                    android:textColor="@color/bb_white"
+                    android:textColor="#AAAAAA"
                     android:textSize="10sp" />
 
-                <TextView
-                    android:id="@+id/textPlayer2Score"
+                <!-- Score value box -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bb_card_light"
-                    android:fontFamily="@font/arcade"
+                    android:background="#66FFFFFF"
                     android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="0"
-                    android:textColor="#FF8847"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:autoSizeMaxTextSize="22sp"
-                    app:autoSizeMinTextSize="12sp"
-                    app:autoSizeTextType="uniform" />
+                    android:layout_marginTop="3dp">
+
+                    <TextView
+                        android:id="@+id/textPlayer2Score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/arcade"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="0"
+                        android:textColor="#AA8847"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:autoSizeMaxTextSize="22sp"
+                        app:autoSizeMinTextSize="12sp"
+                        app:autoSizeTextType="uniform" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <!-- RIGHT PANEL: question number, question, answers (stacked vertically) -->
+        <!-- ═══════════════════════════════════════════════════
+             RIGHT PANEL: Question number + Question + 4 Answers (stacked)
+             ═══════════════════════════════════════════════════ -->
+
+        <!-- Question number -->
         <TextView
             android:id="@+id/textQuestionNumber"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="28dp"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="6dp"
             android:background="@drawable/bb_card_light"
             android:fontFamily="@font/arcade"
             android:gravity="center_vertical"
@@ -290,21 +375,22 @@
             android:paddingEnd="10dp"
             android:text="QUESTION 1 OUT 10"
             android:textColor="@color/bb_red"
-            android:textSize="12sp"
-            app:autoSizeMaxTextSize="13sp"
-            app:autoSizeMinTextSize="8sp"
+            android:textSize="11sp"
+            app:autoSizeMaxTextSize="12sp"
+            app:autoSizeMinTextSize="7sp"
             app:autoSizeTextType="uniform"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guideLeftPanelEnd"
+            app:layout_constraintStart_toEndOf="@id/guideVertical"
             app:layout_constraintTop_toBottomOf="@id/twoPlayerTopHud" />
 
+        <!-- Question text box -->
         <TextView
             android:id="@+id/textQuestion"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/bb_card_light"
             android:fontFamily="@font/arcade"
             android:gravity="center_vertical"
@@ -315,29 +401,32 @@
             android:paddingEnd="12dp"
             android:text="Which of these is NOT a part of a plant?"
             android:textColor="@color/bb_black"
-            android:textSize="14sp"
-            app:autoSizeMaxTextSize="15sp"
+            android:textSize="13sp"
+            app:autoSizeMaxTextSize="14sp"
             app:autoSizeMinTextSize="8sp"
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toTopOf="@id/buttonChoiceA"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guideLeftPanelEnd"
+            app:layout_constraintStart_toEndOf="@id/guideVertical"
             app:layout_constraintTop_toBottomOf="@id/textQuestionNumber" />
 
-        <!-- Answer buttons stacked vertically (per PDF) -->
+        <!-- Answer A -->
         <Button
             android:id="@+id/buttonChoiceA"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginBottom="3dp"
             android:background="@drawable/bb_answer_a"
             android:fontFamily="@font/arcade"
             android:gravity="center_vertical"
             android:includeFontPadding="false"
-            android:maxLines="2"
+            android:maxLines="1"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
             android:paddingStart="14dp"
             android:paddingEnd="10dp"
+            android:stateListAnimator="@null"
             android:text="A  Feather"
             android:textAllCaps="false"
             android:textColor="@color/bb_white"
@@ -347,23 +436,27 @@
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toTopOf="@id/buttonChoiceB"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guideLeftPanelEnd"
+            app:layout_constraintStart_toEndOf="@id/guideVertical"
             app:layout_constraintTop_toBottomOf="@id/textQuestion"
             app:layout_constraintVertical_chainStyle="packed" />
 
+        <!-- Answer B -->
         <Button
             android:id="@+id/buttonChoiceB"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginBottom="3dp"
             android:background="@drawable/bb_answer_b"
             android:fontFamily="@font/arcade"
             android:gravity="center_vertical"
             android:includeFontPadding="false"
-            android:maxLines="2"
+            android:maxLines="1"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
             android:paddingStart="14dp"
             android:paddingEnd="10dp"
+            android:stateListAnimator="@null"
             android:text="B  Stem"
             android:textAllCaps="false"
             android:textColor="@color/bb_white"
@@ -373,22 +466,26 @@
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toTopOf="@id/buttonChoiceC"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guideLeftPanelEnd"
+            app:layout_constraintStart_toEndOf="@id/guideVertical"
             app:layout_constraintTop_toBottomOf="@id/buttonChoiceA" />
 
+        <!-- Answer C -->
         <Button
             android:id="@+id/buttonChoiceC"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginBottom="3dp"
             android:background="@drawable/bb_answer_c"
             android:fontFamily="@font/arcade"
             android:gravity="center_vertical"
             android:includeFontPadding="false"
-            android:maxLines="2"
+            android:maxLines="1"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
             android:paddingStart="14dp"
             android:paddingEnd="10dp"
+            android:stateListAnimator="@null"
             android:text="C  Root"
             android:textAllCaps="false"
             android:textColor="@color/bb_white"
@@ -398,21 +495,25 @@
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toTopOf="@id/buttonChoiceD"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guideLeftPanelEnd"
+            app:layout_constraintStart_toEndOf="@id/guideVertical"
             app:layout_constraintTop_toBottomOf="@id/buttonChoiceB" />
 
+        <!-- Answer D -->
         <Button
             android:id="@+id/buttonChoiceD"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="6dp"
             android:background="@drawable/bb_answer_d"
             android:fontFamily="@font/arcade"
             android:gravity="center_vertical"
             android:includeFontPadding="false"
-            android:maxLines="2"
+            android:maxLines="1"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
             android:paddingStart="14dp"
             android:paddingEnd="10dp"
+            android:stateListAnimator="@null"
             android:text="D  Leaf"
             android:textAllCaps="false"
             android:textColor="@color/bb_white"
@@ -422,10 +523,10 @@
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guideLeftPanelEnd"
+            app:layout_constraintStart_toEndOf="@id/guideVertical"
             app:layout_constraintTop_toBottomOf="@id/buttonChoiceC" />
 
-        <!-- Hidden textProgress kept for Java reference -->
+        <!-- textProgress hidden — kept for Java reference -->
         <TextView
             android:id="@+id/textProgress"
             android:layout_width="1dp"
