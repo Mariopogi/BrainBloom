@@ -115,6 +115,7 @@
         android:label="Two Player Quiz">
         <action android:id="@+id/action_twoPlayerQuiz_to_winnerResult" app:destination="@id/winnerResultFragment" />
         <action android:id="@+id/action_twoPlayerQuiz_to_mainMenu" app:destination="@id/mainMenuFragment" app:popUpTo="@id/mainMenuFragment" app:popUpToInclusive="false" />
+        <action android:id="@+id/action_twoPlayerQuiz_to_twoPlayerSetup" app:destination="@id/twoPlayerSetupFragment" app:popUpTo="@id/twoPlayerSetupFragment" app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

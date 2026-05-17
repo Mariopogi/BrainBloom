@@ -9,13 +9,14 @@ import android.widget.TextView;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.example.brainbloom.R;
+import com.example.brainbloom.game.GameConstants;
 import com.example.brainbloom.models.LeaderboardRecord;
 
 import java.util.List;
 
 public class LeaderboardTextAdapter {
 
-    public void render(Context context, LinearLayout targetLayout, List<LeaderboardRecord> records) {
+    public void render(Context context, LinearLayout targetLayout, List<LeaderboardRecord> records, String gameMode) {
         targetLayout.removeAllViews();
         targetLayout.setOrientation(LinearLayout.VERTICAL);
         targetLayout.setClipChildren(false);
@@ -23,7 +24,7 @@ public class LeaderboardTextAdapter {
 
         Typeface arcadeFont = ResourcesCompat.getFont(context, R.font.arcade);
 
-        addHeaderRow(context, targetLayout, arcadeFont);
+        addHeaderRow(context, targetLayout, arcadeFont, gameMode);
 
         if (records == null || records.isEmpty()) {
             TextView emptyText = createBaseText(context, arcadeFont, "No saved records yet.", 11);
@@ -41,21 +42,36 @@ public class LeaderboardTextAdapter {
             LeaderboardRecord record = records.get(index);
 
             String rank = (index + 1) + ".";
-            String name = safeName(record.getPlayerName());
-            String score = String.valueOf(record.getFinalScore());
-            String time = record.getTimeLeft() + "s";
+            String name;
+            String score;
+            String time;
+
+            if (GameConstants.MODE_TWO_PLAYER.equals(record.getGameMode())) {
+                name = record.getPlayerName(); // "P1 vs P2"
+                score = record.getWinnerName(); // "S1 - S2"
+                time = record.getDifficulty();  // reuse time column for difficulty or similar
+            } else {
+                name = safeName(record.getPlayerName());
+                score = String.valueOf(record.getFinalScore());
+                time = record.getTimeLeft() + "s";
+            }
 
             addRecordRow(context, targetLayout, arcadeFont, rank, name, score, time);
         }
     }
 
-    private void addHeaderRow(Context context, LinearLayout targetLayout, Typeface arcadeFont) {
+    private void addHeaderRow(Context context, LinearLayout targetLayout, Typeface arcadeFont, String gameMode) {
         LinearLayout row = createRow(context);
 
+        boolean isTwoPlayer = GameConstants.MODE_TWO_PLAYER.equals(gameMode);
+        String nameHeader = isTwoPlayer ? "Matchup" : "Name";
+        String scoreHeader = isTwoPlayer ? "Result" : "Score";
+        String timeHeader = isTwoPlayer ? "Diff." : "Time";
+
         row.addView(createColumnText(context, arcadeFont, "Rank", 0.9f, Gravity.START, 10, true));
-        row.addView(createColumnText(context, arcadeFont, "Name", 1.8f, Gravity.CENTER, 10, true));
-        row.addView(createColumnText(context, arcadeFont, "Score", 1.2f, Gravity.CENTER, 10, true));
-        row.addView(createColumnText(context, arcadeFont, "Time", 1.1f, Gravity.END, 10, true));
+        row.addView(createColumnText(context, arcadeFont, nameHeader, 1.8f, Gravity.CENTER, 10, true));
+        row.addView(createColumnText(context, arcadeFont, scoreHeader, 1.2f, Gravity.CENTER, 10, true));
+        row.addView(createColumnText(context, arcadeFont, timeHeader, 1.1f, Gravity.END, 10, true));
 
         targetLayout.addView(row);
     }
@@ -130,10 +146,6 @@ public class LeaderboardTextAdapter {
         }
 
         name = name.trim();
-
-        if (name.length() > 9) {
-            return name.substring(0, 9);
-        }
 
         return name;
     }

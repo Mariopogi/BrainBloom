@@ -174,7 +174,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="6dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -182,7 +181,7 @@
 
                     <ImageView
                         android:layout_width="100dp"
-                        android:layout_height="80dp"
+                        android:layout_height="60dp"
                         android:src="@drawable/ic_player"/>
 
                     <TextView
@@ -220,7 +219,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="6dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -281,7 +279,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="6dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -290,7 +287,7 @@
                     <!-- Person icon white box -->
                     <ImageView
                         android:layout_width="100dp"
-                        android:layout_height="80dp"
+                        android:layout_height="60dp"
                         android:src="@drawable/ic_player"/>
 
                     <TextView
@@ -329,7 +326,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="6dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"

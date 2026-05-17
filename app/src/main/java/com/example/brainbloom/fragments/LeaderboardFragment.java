@@ -50,8 +50,8 @@ public class LeaderboardFragment extends Fragment {
     }
 
     private void loadLeaderboards() {
-        adapter.render(requireContext(), singleLayout, databaseHelper.getTopRecords(GameConstants.MODE_SINGLE_PLAYER, 3));
-        adapter.render(requireContext(), twoPlayerLayout, databaseHelper.getTopRecords(GameConstants.MODE_TWO_PLAYER, 3));
+        adapter.render(requireContext(), singleLayout, databaseHelper.getTopRecords(GameConstants.MODE_SINGLE_PLAYER, 3), GameConstants.MODE_SINGLE_PLAYER);
+        adapter.render(requireContext(), twoPlayerLayout, databaseHelper.getTopRecords(GameConstants.MODE_TWO_PLAYER, 3), GameConstants.MODE_TWO_PLAYER);
     }
 
     private void confirmReset(String mode) {

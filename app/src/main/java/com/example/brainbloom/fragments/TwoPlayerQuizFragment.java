@@ -450,21 +450,8 @@ public class TwoPlayerQuizFragment extends Fragment implements PauseDialogFragme
         handler.removeCallbacksAndMessages(null);
         removeFeedbackPopup();
 
-        quizFinished = false;
-        feedbackShowing = false;
-        acceptingAnswers = true;
-
-        activePlayerNumber = 1;
-
-        session.resetTwoPlayer(player1Name, player2Name, difficulty);
-
-        textPlayer1Score.setText("0");
-        textPlayer2Score.setText("0");
-        textQuizBook.setText("DIFFICULTY: " + difficulty.toUpperCase());
-
-        loadQuestionsForActivePlayer();
-        updatePlayerHighlight();
-        showQuestion();
+        // Go back to the setup menu as requested
+        NavHostFragment.findNavController(this).navigate(R.id.action_twoPlayerQuiz_to_twoPlayerSetup);
     }
 
     @Override

@@ -1,298 +1,506 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:layout_height="match_parent">
 
-    <FrameLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_pastel_sky" />
 
-        <ImageView
+    <!-- Main content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingStart="28dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="28dp"
+        android:paddingBottom="16dp">
+
+        <!-- HAMBURGER MENU — top left, anchored via RelativeLayout row -->
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@null"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bg_pastel_sky" />
+            android:layout_height="wrap_content">
 
-        <LinearLayout
+            <!-- Hamburger icon (≡) -->
+            <LinearLayout
+                android:id="@+id/hamburgerButton"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_alignParentStart="true">
+
+                <View
+                    android:layout_width="26dp"
+                    android:layout_height="3dp"
+                    android:background="#FFFFFF"
+                    android:layout_marginBottom="5dp" />
+
+                <View
+                    android:layout_width="26dp"
+                    android:layout_height="3dp"
+                    android:background="#FFFFFF"
+                    android:layout_marginBottom="5dp" />
+
+                <View
+                    android:layout_width="26dp"
+                    android:layout_height="3dp"
+                    android:background="#FFFFFF" />
+
+            </LinearLayout>
+
+            <!-- Dropdown menu (hidden by default) -->
+            <LinearLayout
+                android:id="@+id/dropdownMenu"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hamburgerButton"
+                android:background="#FFFFFFFF"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:elevation="8dp">
+
+                <TextView
+                    android:id="@+id/buttonWinnerPlayAgain"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:paddingStart="20dp"
+                    android:text="Play Again"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#DDDDDD" />
+
+                <TextView
+                    android:id="@+id/buttonWinnerMainMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:paddingStart="20dp"
+                    android:text="Main Menu"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- STAR BADGE -->
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:contentDescription="Winner star"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_completed_badge" />
+
+        <!-- WINNER TITLE -->
+        <TextView
+            android:id="@+id/textWinnerTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingStart="24dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="24dp"
-            android:paddingBottom="24dp">
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/arcade"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:shadowColor="#000000"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="1"
+            android:text="PLAYER 1 WINS!"
+            android:textColor="@color/bb_yellow"
+            android:textSize="32sp"
+            app:autoSizeMaxTextSize="32sp"
+            app:autoSizeMinTextSize="16sp"
+            app:autoSizeTextType="uniform"
+            xmlns:app="http://schemas.android.com/apk/res-auto" />
 
-            <!-- STAR BADGE -->
+        <!-- PLAYER 1 CARD — YELLOW/GOLD background -->
+        <LinearLayout
+            android:id="@+id/cardPlayer1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="#FFD700"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <!-- Crown icon left -->
             <ImageView
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:id="@+id/imageCrownP1"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:adjustViewBounds="true"
-                android:contentDescription="Winner star"
+                android:contentDescription="Crown"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_completed_badge" />
+                android:src="@drawable/ic_crown_player_win" />
 
-            <!-- WINNER TITLE -->
-            <TextView
-                android:id="@+id/textWinnerTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/arcade"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:shadowColor="#000000"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="1"
-                android:text="PLAYER 1 WINS!"
-                android:textColor="@color/bb_yellow"
-                android:textSize="32sp"
-                app:autoSizeMaxTextSize="32sp"
-                app:autoSizeMinTextSize="18sp"
-                app:autoSizeTextType="uniform" />
-
-            <!-- PLAYER 1 CARD — YELLOW/GOLD -->
+            <!-- Center: label + stats rows -->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="#FFD700"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <!-- Crown icon -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arcade"
+                    android:includeFontPadding="false"
+                    android:text="PLAYER 1"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <!-- SCORE row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/arcade"
+                        android:includeFontPadding="false"
+                        android:text="SCORE"
+                        android:textColor="#333333"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textP1Score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/arcade"
+                        android:includeFontPadding="false"
+                        android:text="0"
+                        android:textColor="#000000"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- TIME row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/arcade"
+                        android:includeFontPadding="false"
+                        android:text="TIME"
+                        android:textColor="#333333"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textP1Time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/arcade"
+                        android:includeFontPadding="false"
+                        android:text="0s"
+                        android:textColor="#000000"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- COMBO row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/arcade"
+                        android:includeFontPadding="false"
+                        android:text="COMBO"
+                        android:textColor="#333333"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textP1Combo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/arcade"
+                        android:includeFontPadding="false"
+                        android:text="0x"
+                        android:textColor="#000000"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Right: person avatar + name pill -->
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:adjustViewBounds="true"
-                    android:contentDescription="Crown"
+                    android:contentDescription="Player 1"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ic_crown_player_win" />
+                    android:src="@drawable/ic_player" />
 
-                <!-- Stats -->
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/textWinnerP1Name"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/arcade"
-                        android:includeFontPadding="false"
-                        android:text="PLAYER 1"
-                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textWinnerP1Stats"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:fontFamily="@font/arcade"
-                        android:includeFontPadding="false"
-                        android:lineSpacingExtra="4dp"
-                        android:text="SCORE     0&#10;TIME      0s&#10;COMBO     0x"
-                        android:textColor="#222222"
-                        android:textSize="13sp"
-                        app:autoSizeMaxTextSize="14sp"
-                        app:autoSizeMinTextSize="9sp"
-                        app:autoSizeTextType="uniform" />
-
-                </LinearLayout>
-
-                <!-- Avatar + name -->
-                <LinearLayout
-                    android:layout_width="72dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <!-- Person icon white box -->
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="70dp"
-                        android:src="@drawable/ic_player"/>
-
-                    <TextView
-                        android:id="@+id/textWinnerP1Name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:background="#AA000000"
-                        android:fontFamily="@font/arcade"
-                        android:gravity="center"
-                        android:includeFontPadding="false"
-                        android:maxLines="1"
-                        android:padding="3dp"
-                        android:text="Mario"
-                        android:textColor="#FFFFFF"
-                        android:textSize="11sp"
-                        app:autoSizeMaxTextSize="12sp"
-                        app:autoSizeMinTextSize="8sp"
-                        app:autoSizeTextType="uniform" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- PLAYER 2 CARD — CREAM/BEIGE -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="#F5F0DC"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="16dp">
-
-                <!-- Dimmed placeholder left -->
-                <LinearLayout
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:alpha="0.3"
-                    android:background="#AAAAAA"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="👤"
-                        android:textSize="26sp" />
-
-                </LinearLayout>
-
-                <!-- Stats -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/arcade"
-                        android:includeFontPadding="false"
-                        android:text="PLAYER 2"
-                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textWinnerP2Stats"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:fontFamily="@font/arcade"
-                        android:includeFontPadding="false"
-                        android:lineSpacingExtra="4dp"
-                        android:text="SCORE     0&#10;TIME      0s&#10;COMBO     0x"
-                        android:textColor="#555555"
-                        android:textSize="13sp"
-                        app:autoSizeMaxTextSize="14sp"
-                        app:autoSizeMinTextSize="9sp"
-                        app:autoSizeTextType="uniform" />
-
-                </LinearLayout>
-
-                <!-- Avatar + name -->
-                <LinearLayout
-                    android:layout_width="72dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="70dp"
-                        android:src="@drawable/ic_player"/>
-
-                    <TextView
-                        android:id="@+id/textWinnerP2Name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:background="#AA000000"
-                        android:fontFamily="@font/arcade"
-                        android:gravity="center"
-                        android:includeFontPadding="false"
-                        android:maxLines="1"
-                        android:padding="3dp"
-                        android:text="Trisha"
-                        android:textColor="#FFFFFF"
-                        android:textSize="11sp"
-                        app:autoSizeMaxTextSize="12sp"
-                        app:autoSizeMinTextSize="8sp"
-                        app:autoSizeTextType="uniform" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- Hidden for legacy Java reference -->
-            <TextView
-                android:id="@+id/textWinnerStats"
-                android:layout_width="1dp"
-                android:layout_height="1dp"
-                android:visibility="gone" />
-
-            <!-- BUTTONS -->
-            <LinearLayout
-                android:id="@+id/winnerButtonRow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/buttonWinnerPlayAgain"
-                    android:layout_width="200dp"
-                    android:layout_height="52dp"
-                    android:background="@drawable/bb_button_green"
+                    android:layout_marginTop="4dp"
+                    android:background="#AA000000"
                     android:fontFamily="@font/arcade"
+                    android:gravity="center"
                     android:includeFontPadding="false"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/play_again"
-                    android:textAllCaps="false"
-                    android:textColor="@color/bb_white"
-                    android:textSize="@dimen/button_text_size" />
-
-                <Button
-                    android:id="@+id/buttonWinnerMainMenu"
-                    android:layout_width="200dp"
-                    android:layout_height="52dp"
-                    android:layout_marginStart="12dp"
-                    android:background="@drawable/bb_button_gray"
-                    android:fontFamily="@font/arcade"
-                    android:includeFontPadding="false"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/main_menu"
-                    android:textAllCaps="false"
-                    android:textColor="@color/bb_white"
-                    android:textSize="@dimen/button_text_size" />
+                    android:maxLines="1"
+                    android:padding="3dp"
+                    android:text="Mario"
+                    android:textColor="#FFFFFF"
+                    android:textSize="11sp"
+                    app:autoSizeMaxTextSize="12sp"
+                    app:autoSizeMinTextSize="7sp"
+                    app:autoSizeTextType="uniform"
+                    xmlns:app="http://schemas.android.com/apk/res-auto" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-    </FrameLayout>
+        <!-- PLAYER 2 CARD — CREAM/BEIGE background -->
+        <LinearLayout
+            android:id="@+id/cardPlayer2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:background="#F0EDD0"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
 
-</ScrollView>
+            <!-- Crown icon left -->
+            <ImageView
+                android:id="@+id/imageCrownP2"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="Crown"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_crown_player_win"
+                android:visibility="invisible" />
+
+            <!-- Center: label + stats rows -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arcade"
+                    android:includeFontPadding="false"
+                    android:text="PLAYER 2"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <!-- SCORE row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/arcade"
+                        android:includeFontPadding="false"
+                        android:text="SCORE"
+                        android:textColor="#555555"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textP2Score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/arcade"
+                        android:includeFontPadding="false"
+                        android:text="0"
+                        android:textColor="#333333"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- TIME row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/arcade"
+                        android:includeFontPadding="false"
+                        android:text="TIME"
+                        android:textColor="#555555"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textP2Time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/arcade"
+                        android:includeFontPadding="false"
+                        android:text="0s"
+                        android:textColor="#333333"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- COMBO row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/arcade"
+                        android:includeFontPadding="false"
+                        android:text="COMBO"
+                        android:textColor="#555555"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textP2Combo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/arcade"
+                        android:includeFontPadding="false"
+                        android:text="0x"
+                        android:textColor="#333333"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Right: person avatar + name pill -->
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Player 2"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_player" />
+
+                <TextView
+                    android:id="@+id/textWinnerP2Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="#AA000000"
+                    android:fontFamily="@font/arcade"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:padding="3dp"
+                    android:text="Trisha"
+                    android:textColor="#FFFFFF"
+                    android:textSize="11sp"
+                    app:autoSizeMaxTextSize="12sp"
+                    app:autoSizeMinTextSize="7sp"
+                    app:autoSizeTextType="uniform"
+                    xmlns:app="http://schemas.android.com/apk/res-auto" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Hidden textWinnerStats for any legacy reference -->
+        <TextView
+            android:id="@+id/textWinnerStats"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:visibility="gone" />
+
+        <!-- textWinnerP1Stats / textWinnerP2Stats kept as hidden for any external reference -->
+        <TextView
+            android:id="@+id/textWinnerP1Stats"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textWinnerP2Stats"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</FrameLayout>
